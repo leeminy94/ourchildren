@@ -1,0 +1,4493 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="website" property="og:type">
+<meta content="https://www.ihappynanum.com/Nanum/B/JI9W1PPGVT" property="og:url">
+<meta content="해피나눔" property="og:title">
+<meta content="모금URL 테스트 배너입니다. (PC, 모바일 환경 가능)" property="og:description">
+<meta content="https://www.ihappynanum.com/Nanum/cresource/banner/url_img.jpg" property="og:image">
+<meta property="og:image:width" content="480">
+<meta property="og:image:height" content="480">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--meta http-equiv="Content-Type" content="text/html; charset=euc-kr"-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>우리아이재단::통합결제서비스</title>
+
+<link rel="stylesheet" href="https://www.ihappynanum.com/Nanum/cresource/css/ui-lightness/jquery-ui-1.8.18.custom.css">
+<link rel="stylesheet" type="text/css" href="./css/popup.css">
+
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/jquery-1.7.1.min.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/json2.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/jquery-imask.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/nanum_comm.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/knockout-2.0.js"></script>
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/jquery.numeric.js"></script>
+ <!-- Knockout-Validation -->
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/knockout.validation.js"></script>
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/knockout.validation.ko-KR.js"></script>
+<!-- Knockout-Mapping -->
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/knockout.mapping.debug.js"></script>
+<!-- UnderscoreJS -->
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/underscore.js"></script>
+<!-- Underscore.string.JS -->
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/underscore.string.js"></script>
+<!-- MomentJS -->
+<script type="text/javascript" src="https://www.ihappynanum.com/Nanum/cresource/js/moment.js"></script>  
+<script src="https://www.ihappynanum.com/Nanum/cresource/js/root.js"></script>
+
+<!-- <script type="text/javascript" src="//dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
+<script type="text/javascript" src="http://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+<script charset="UTF-8" type="text/javascript" src="https://t1.daumcdn.net/postcode/api/core/190611/1560237575423/190611.js"></script> 
+<!--<script type="text/javascript" src="//ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js?autoload=false"></script> -->
+
+<style type="text/css">
+/* 하단부분*/
+/* .btm { text-align: center; padding:20px; margin-left:330px;  float:left;} */
+.btm { text-align: center; margin:0 auto; padding:20px; margin-top:30px;    } 
+.btm a:link{ text-align: center; background:#303437; padding: 10px 25px;  font-weight:bold; color:#ffffff; text-decoration:none;}
+.btm a:visited{ text-align: center; background:#303437; padding: 10px 25px; font-weight:bold; color:#ffffff; text-decoration:none;}
+.btm a:hover{ text-align: center; background:#303437; padding: 10px 25px;  font-weight:bold; color:#ffffff; text-decoration: underline;}    
+
+/* .btm { text-align: center; margin:0 auto; padding:20px; margin-left:330px; float:left;}
+.btm a:link{ text-align: center; background:#303437; padding: 10px 25px;  font-weight:bold; color:#ffffff; text-decoration:none;}
+.btm a:visited{ text-align: center; background:#303437; padding: 10px 25px; font-weight:bold; color:#ffffff; text-decoration:none;}
+.btm a:hover{ text-align: center; background:#303437; padding: 10px 25px;  font-weight:bold; color:#ffffff; text-decoration:none;}   
+*/
+
+.btm-tbl {
+	width: 100%; 
+	border-collapse: collapse;
+}
+
+.btm-tbl td {
+width: 100%; 
+	/* text-align: center; */
+	padding: 0;
+}
+
+.copy{height:30px; padding-top:7px; color:#666; width:78%; font-weight:bold; float:left; margin-left:2%;}
+.co_logo{width:18%; height:30px; float:right; text-align:right; margin-right:2%; }
+
+.ui-progressbar {
+position: relative;
+}
+.progress-label {
+position: absolute;
+left: 50%;
+top: 4px;
+font-weight: bold;
+text-shadow: 1px 1px 0 #fff;
+}
+
+#loadingScreen {
+	background: url(images/loading.gif) no-repeat 5px 8px;
+	padding-left: 25px;
+}
+/* hide the close x on the loading screen */
+.loadingScreenWindow .ui-dialog-titlebar-close {
+	display: none;
+}
+</style>
+<script>
+/* 
+var img1 = new Image();
+img1.src = "";
+var width = img1.height;
+
+alert(img1.height); */
+
+function execDaumPostcode() {
+new daum.Postcode({
+	oncomplete: function(data) {
+		var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+		var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+		if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+			extraRoadAddr += data.bname;
+		}
+		// 건물명이 있고, 공동주택일 경우 추가한다.
+		if(data.buildingName !== '' && data.apartment === 'Y'){
+		   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		}
+		// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		if(extraRoadAddr !== ''){
+			extraRoadAddr = ' (' + extraRoadAddr + ')';
+		}
+		// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+		if(fullRoadAddr !== ''){
+			fullRoadAddr += extraRoadAddr;
+		}
+
+		// 우편번호와 주소 정보를 해당 필드에 넣는다.
+		document.getElementById('memZipCode3').value = data.zonecode; //5자리 새우편번호 사용
+		document.getElementById('memAddr1').value = fullRoadAddr;
+		//document.getElementById('memAddr2').value = data.jibunAddress;
+	}
+}).open();
+}
+
+$(document).ready(function(){
+
+var top_img_height = 0;
+var img = new Image();
+
+img.onload = function() { 
+	top_img_height = this.height;
+	//alert(top_img_height);
+	if(top_img_height > 300) {
+		//alert(1);
+		$("#topImg").css("height", "300");
+	} else {
+		//alert(2);
+	}
+	
+};
+
+img.src = "";
+
+$("form").bind("keypress", function (e) {
+	if (e.keyCode == 13) {
+		if($(this).attr("id")=="addrform") {
+			$("#modalAddr").click();	
+		}
+		return false;
+	}
+});
+
+$("#memDonationJuminNum, #memTel2, #memTel3, #cardNo1, #cardNo2, #cardNo3, #cardNo4, #hpNo2, #hpNo3, #acctNo, #juminNum1, #tmpConfirmAmount2, #confirmAmount").addClass("inputNum");
+
+$('.inputNum').css("ime-mode","disabled");
+$('.inputNum').keypress(function(event){ 
+	if ((event.keyCode>= 47) && (event.keyCode <= 57)) {     
+	} else {     
+		event.preventDefault();   
+	}
+});
+//주소찾기
+$( "#dialog-form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 550,
+	modal: true,
+	buttons: {			
+		'닫기': function() {
+			$( this ).dialog( "close" );
+		}
+	},
+	close: function() {
+		$("#AddrDong").val("");			
+	}
+});
+
+
+//주소찾기
+$( "#sign-layer" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 400,
+	modal: true,
+	buttons: {			
+		'닫기': function() {
+			$( this ).dialog( "close" );
+		}
+	},
+	close: function() {
+	}
+});
+
+$("#hpAuth").dialog(
+		{
+			autoOpen:false,
+			height: 400,
+			width: 550,
+			modal:true,
+			buttons: {
+				'닫기':function(){
+					$(this).dialog("close");
+				}
+			},
+			close: function(){
+				clearTimeout(timeoutId);
+			}
+		}
+);
+
+// 주소찾기 버튼
+$("#modalAddr").button().click(function() {
+	if($.trim($("#AddrDong").val())=="") {
+		 alert("검색어를 입력해 주세요");
+		 $("#AddrDong").focus();
+		return false;
+	}
+	$.post("/Nanum/nanum/comm/getAddrDongBased.nanum",
+		{ dong: $.trim($("#AddrDong").val()) },
+		  function(data){
+				$("#addrbody").empty();
+				if(data.length==0) {
+					  $("#addrbody").append("<td colspan='3'>검색결과가 없습니다.</td>");
+					  return false;
+				}						
+				$.each(data, function(key, model) {
+						tmpContent = "<tr id=addr"+key+"><td align='center'>"+model.zipcode1+"-"+model.zipcode2+"</td>";
+						tmpContent += "<td>"+model.addr+"</td>";
+						tmpContent += "<td align='center'>";
+						tmpContent += "<button name='addrbtn"+key+"' onClick='setAddr(this)' class='smallbutton' zipcode1='"+model.zipcode1+"' zipcode2='"+model.zipcode2+"' sido='"+model.sido+"' gugun='"+model.gugun+"' dong='"+model.dong+"' ri='"+model.ri+"'>";
+						tmpContent += "선택";
+						tmpContent += " 	</button>";
+						tmpContent += " 	</td>";
+						tmpContent += "</tr>";
+						$("#addrbody").append(tmpContent);
+				});
+				$(".smallbutton").addClass("ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all").css("font-size","10px");
+		   },
+		"json");				
+});
+	
+$("#loadingScreen").dialog({
+	autoOpen: false,    // set this to false so we can manually open it
+	dialogClass: "loadingScreenWindow",
+	closeOnEscape: false,
+	draggable: false,
+	width: 460,
+	minHeight: 50,
+	modal: true,
+	buttons: {},
+	resizable: false,
+	open: function() {
+		// scrollbar fix for IE
+		$('body').css('overflow','hidden');
+	},
+	close: function() {
+		// reset overflow
+		$('body').css('overflow','auto');
+	}
+}); // end of dialog
+
+//waitingDialog();
+
+root.init();
+pass = new mainMD();
+pass.viewMD = new wholeMD(this);
+ko.applyBindings(pass.viewMD);
+});
+
+function copyUrl(){
+var _ua = navigator.userAgent;
+var rv = -1;
+
+
+//IE 11,10,9,8
+var trident = _ua.match(/Trident\/(\d.\d)/i);
+if( trident != null )
+{
+	window.clipboardData.setData('Text', "https://www.ihappynanum.com/Nanum/B/JI9W1PPGVT"); 
+	alert('주소가 복사되었습니다.'); 
+} else { 
+	temp = prompt("Ctrl+C를 눌러 아래 URL을 복사하세요1", cp ); 
+} 
+}
+
+function goPayList(){
+window.location.href="https://www.ihappynanum.com/Nanum/P/paylist";
+}
+
+var pass;
+
+function mainMD() {
+var self = this;
+self.viewMD;	
+}
+
+function wholeMD(parent) {
+var self = this;
+self.parent = parent;
+self.initialDateTime = root.getTime("/Nanum","yyyyMMddHHmmss");
+self.date = self.initialDateTime.substring(0,8);
+self.year = self.date.substring(0,4);
+self.month = self.date.substring(0,6);
+self.formMD = new formMD(self);
+
+self.yearList = [];
+if("null"=='E'){
+	self.yearList.push({code:self.year,value:self.year+""});
+}else{
+	self.yearList.push({code:self.year,value:self.year+"년"});
+}
+for(var i=1; i <=10; i++) {
+	if("null"=='E'){
+		self.yearList.push({code:moment(self.date,"YYYYMMDD").add("years",i).format("YYYY"),value:moment(self.date,"YYYYMMDD").add("years",i).format("YYYY")+""});
+	}else{
+		self.yearList.push({code:moment(self.date,"YYYYMMDD").add("years",i).format("YYYY"),value:moment(self.date,"YYYYMMDD").add("years",i).format("YYYY")+"년"});
+	}
+}		
+
+self.monthList = [];
+if("null"=='E'){
+	self.monthList.push({code:"01",value:"01"});
+	self.monthList.push({code:"02",value:"02"});
+	self.monthList.push({code:"03",value:"03"});
+	self.monthList.push({code:"04",value:"04"});
+	self.monthList.push({code:"05",value:"05"});
+	self.monthList.push({code:"06",value:"06"});
+	self.monthList.push({code:"07",value:"07"});
+	self.monthList.push({code:"08",value:"08"});
+	self.monthList.push({code:"09",value:"09"});
+	self.monthList.push({code:"10",value:"10"});
+	self.monthList.push({code:"11",value:"11"});
+	self.monthList.push({code:"12",value:"12"});
+}else{
+	self.monthList.push({code:"01",value:"01월"});
+	self.monthList.push({code:"02",value:"02월"});
+	self.monthList.push({code:"03",value:"03월"});
+	self.monthList.push({code:"04",value:"04월"});
+	self.monthList.push({code:"05",value:"05월"});
+	self.monthList.push({code:"06",value:"06월"});
+	self.monthList.push({code:"07",value:"07월"});
+	self.monthList.push({code:"08",value:"08월"});
+	self.monthList.push({code:"09",value:"09월"});
+	self.monthList.push({code:"10",value:"10월"});
+	self.monthList.push({code:"11",value:"11월"});
+	self.monthList.push({code:"12",value:"12월"});
+}
+
+}
+
+function formValueMD(parent) {
+
+var self = this;
+self.parent = parent;
+self.topImg = ko.observable("");
+
+//alert(self.topImg());
+//src:topImg()
+
+/* var img = new Image();
+img.src = data.body;
+var width = img.width;
+var height = img.height; */
+
+self.mediaType = ko.observable("B");
+self.introMode = ko.observable(false);	
+
+
+if("" != "") {
+	self.orgaNm = "";
+} else {
+   self.orgaNm = "해피나눔";
+}
+ 
+if("JI9W1PPGVT" =="G4UK8PDMDS") {
+	self.orgaTel = "1544-7079 (010-3982-7079)";	
+} else {
+	self.orgaTel = "1544-7079";
+}
+
+// 호이호이 예외처리
+if("null"=='E'){
+	self.memGrpTitle="Membership Classification";
+}else{
+	if("JI9W1PPGVT" == "ZXV6VR26X0") {
+		self.memGrpTitle="후원종류";
+	} else {
+		self.memGrpTitle="회원구분"; 
+	}
+}
+
+/* if("JI9W1PPGVT" =="0L5JC2H4NN") {
+	self.customAgree = "Y";
+} else {
+	self.customAgree = "N";
+} */
+
+
+self.PurpOfGive = "후원금";
+self.bannerMsg = "모금URL 테스트 배너입니다. (PC, 모바일 환경 가능)";
+
+self.bannerMsg = self.bannerMsg==""?"결제 감사드립니다.":self.bannerMsg;
+
+//
+self.bannerName = "";
+self.cmsFlag = "Y";
+self.cmsPayType= "R";
+self.hpFlag = "Y";
+self.hpPayType= "A";
+self.cardFlag = "Y";
+self.cardPayType= "A";
+
+
+self.memGrpFlag = "Y";
+self.memGrpType = "O";	
+self.emailFlag = "Y";
+self.emailType = "O";	
+self.addrFlag = "Y";
+self.addrType = "O";
+self.receiptFlag = "Y";
+self.receiptType = "O";
+
+self.recommendFlag = "N";
+self.recommendType = "O";
+
+self.payGrpFlag = "N";
+self.payGrpType = "O";
+self.memTypeFlag = "N";
+self.memTypeType = "O";
+self.memTitleFlag = "N";
+self.memTitleType = "O";
+self.companyStatFlag = "N";
+self.companyStatType = "O";
+
+self.defaultFlag = "Y";
+self.moneyType = "C";
+self.moneyRangeS = "1000";
+self.moneyRangeM = "2000";
+self.moneyRangeL = "3000";
+
+self.hpOpen = "Y";
+self.cmsOpen = "Y";
+self.cardOpen = "Y";
+self.vacOpen = "N";
+/* self.vacOpen = "Y"; */ 
+
+self.vanCode = "DM";
+self.topImgFlag = "N";
+
+self.vacFlag = "N";
+/* self.vacFlag = "Y"; */
+self.depositor = "";
+
+//self.topImg = "";
+
+
+
+//20140421 추가 
+self.isMobile = ko.observable(root.mobilecheck());
+//self.esignUseFlag=ko.observable("Y");
+
+// pc 버전은 공인인증 참조. 모바일 버전은 전자서명 참조
+//self.esignUseFlag=ko.observable("Y");
+self.esignUseFlag=ko.observable("Y");
+self.selfCertFlag=ko.observable("N");
+
+self.esignResultCode=ko.observable("");
+self.esignTrNo = ko.observable("");
+self.esignIp = ko.observable("");
+
+/* self.esignResultCode=ko.observable("B000");
+self.esignTrNo = ko.observable("22222222");
+self.esignIp = ko.observable("111.111.111.111"); */
+//20140421  추가
+
+self.cmsPayCodeAvaliable = [];
+self.cmsOnlyPayCode=[];
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("089"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"089", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"089", value:"K뱅크"});
+}
+self.cmsOnlyPayCode.push("089");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("004"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"004", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"004", value:"국민은행"});
+}
+self.cmsOnlyPayCode.push("004");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("011"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"011", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"011", value:"농협"});
+}
+self.cmsOnlyPayCode.push("011");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("020"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"020", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"020", value:"우리은행"});
+}
+self.cmsOnlyPayCode.push("020");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("026"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"026", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"026", value:"신한은행"});
+}
+self.cmsOnlyPayCode.push("026");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("081"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"081", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"081", value:"KEB하나은행"});
+}
+self.cmsOnlyPayCode.push("081");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("071"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"071", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"071", value:"우체국"});
+}
+self.cmsOnlyPayCode.push("071");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("003"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"003", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"003", value:"기업은행"});
+}
+self.cmsOnlyPayCode.push("003");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("023"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"023", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"023", value:"SC은행"});
+}
+self.cmsOnlyPayCode.push("023");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("027"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"027", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"027", value:"씨티은행"});
+}
+self.cmsOnlyPayCode.push("027");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("005"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"005", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"005", value:"외환은행"});
+}
+self.cmsOnlyPayCode.push("005");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("032"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"032", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"032", value:"부산은행"});
+}
+self.cmsOnlyPayCode.push("032");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("034"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"034", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"034", value:"광주은행"});
+}
+self.cmsOnlyPayCode.push("034");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("035"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"035", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"035", value:"제주은행"});
+}
+self.cmsOnlyPayCode.push("035");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("037"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"037", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"037", value:"전북은행"});
+}
+self.cmsOnlyPayCode.push("037");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("031"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"031", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"031", value:"대구은행"});
+}
+self.cmsOnlyPayCode.push("031");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("039"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"039", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"039", value:"경남은행"});
+}
+self.cmsOnlyPayCode.push("039");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("007"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"007", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"007", value:"수협"});
+}
+self.cmsOnlyPayCode.push("007");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("045"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"045", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"045", value:"새마을금고"});
+}
+self.cmsOnlyPayCode.push("045");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("048"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"048", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"048", value:"신협"});
+}
+self.cmsOnlyPayCode.push("048");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("204"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"204", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"204", value:"삼성증권"});
+}
+self.cmsOnlyPayCode.push("204");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("002"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"002", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"002", value:"산업은행"});
+}
+self.cmsOnlyPayCode.push("002");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("209"){
+	case '002' : nor_code_value_e= 'Korea Development bank'    ; break;
+	case '003' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '005' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '007' : nor_code_value_e= 'National Federation of Fisheries Cooperatives'      ; break;
+	case '011' : nor_code_value_e= 'Nonghyup'      ; break;
+	case '020' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '023' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '026' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	case '027' : nor_code_value_e= 'Citi Bank'    ; break;
+	case '031' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '032' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '034' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '035' : nor_code_value_e= 'Jeju Bank'    ; break;
+	case '037' : nor_code_value_e= 'Jeonbuk Bank'    ; break;
+	case '039' : nor_code_value_e= 'Kyongnam Bank'    ; break;
+	case '045' : nor_code_value_e= 'The Saemaeul finance firm'   ; break;
+	case '048' : nor_code_value_e= 'Suhyup'      ; break;
+	case '071' : nor_code_value_e= 'Korea Post Office'     ; break;
+	case '081' : nor_code_value_e= 'Hana Bank' ; break;
+	case '204' : nor_code_value_e= 'Samsung Securities'    ; break;
+	case '209' : nor_code_value_e= 'Yuanta Securities'   ; break;
+	}
+	self.cmsPayCodeAvaliable.push({code:"209", value:nor_code_value_e});
+}else{
+	self.cmsPayCodeAvaliable.push({code:"209", value:"유안타증권"});
+}
+self.cmsOnlyPayCode.push("209");
+
+
+self.hpPayCodeAvaliable = [];
+self.hpOnlyPayCode = [];
+
+self.hpPayCodeAvaliable.push({code:"SKT", value:"SKT"});
+self.hpOnlyPayCode.push("SKT");
+
+self.hpPayCodeAvaliable.push({code:"KTF", value:"KT"});
+self.hpOnlyPayCode.push("KTF");
+
+self.hpPayCodeAvaliable.push({code:"LGT", value:"LG U+"});
+self.hpOnlyPayCode.push("LGT");
+
+
+
+/* self.targetMemGrpCode="";
+self.memGrps = [];
+self.memGrpsValues = [];    
+		
+		self.memGrps.push({code:"003", value:"학과발전기금"});
+		self.memGrpsValues.push("003");
+		self.memGrps.push({code:"004", value:"대학발전기금"});
+		self.memGrpsValues.push("004");
+
+self.memGrp = ko.observable("001").extend({RadioSelectCheckPattern:self.memGrpsValues});
+self.memGrp.displayName="기부금용도";
+self.memGrp.eid="memGrp"; */
+
+/* self.genders = [];
+self.genderValues = [];
+self.genders.push({code:"1", value:"남성"});
+self.genderValues.push("1");
+self.genders.push({code:"2", value:"여성"});
+self.genderValues.push("2");
+
+self.gender = ko.observable("0").extend({RadioSelectCheckPattern:self.genders});
+self.gender.displayName="성별";
+self.gender.eid="gender"; */
+
+self.cardPayCodeAvaliable = [];
+self.cardOnlyPayCode = [];
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("001"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"001", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"001", value:"신한카드"});
+}
+	self.cardOnlyPayCode.push("001");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("002"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"002", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"002", value:"비씨카드"});
+}
+	self.cardOnlyPayCode.push("002");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("003"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"003", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"003", value:"삼성카드"});
+}
+	self.cardOnlyPayCode.push("003");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("004"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"004", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"004", value:"KB국민카드"});
+}
+	self.cardOnlyPayCode.push("004");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("005"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"005", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"005", value:"현대카드"});
+}
+	self.cardOnlyPayCode.push("005");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("011"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"011", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"011", value:"롯데카드"});
+}
+	self.cardOnlyPayCode.push("011");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("006"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"006", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"006", value:"하나SK카드"});
+}
+	self.cardOnlyPayCode.push("006");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("007"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"007", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"007", value:"우리카드"});
+}
+	self.cardOnlyPayCode.push("007");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("008"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"008", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"008", value:"NH농협카드"});
+}
+	self.cardOnlyPayCode.push("008");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("009"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"009", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"009", value:"외환카드"});
+}
+	self.cardOnlyPayCode.push("009");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("010"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"010", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"010", value:"씨티카드"});
+}
+	self.cardOnlyPayCode.push("010");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("099"){
+	case '001' : nor_code_value_e= 'Shinhan Card'    ; break;
+	case '002' : nor_code_value_e= 'BC Card'    ; break;
+	case '003' : nor_code_value_e= 'Samsung Card'    ; break;
+	case '004' : nor_code_value_e= 'Kookmin Card'    ; break;
+	case '005' : nor_code_value_e= 'Hyundai Card'      ; break;
+	case '006' : nor_code_value_e= 'Hana Card'      ; break;
+	case '007' : nor_code_value_e= 'Woori Card'    ; break;
+	case '008' : nor_code_value_e= 'Nonghyup Card'    ; break;
+	case '009' : nor_code_value_e= 'Korea Exchange Card'    ; break;
+	case '010' : nor_code_value_e= 'Citi Card'    ; break;
+	case '011' : nor_code_value_e= 'ect Card'    ; break;
+	case '099' : nor_code_value_e= 'Busan Bank'    ; break;
+	}
+	self.cardPayCodeAvaliable.push({code:"099", value:nor_code_value_e});
+}else{
+	self.cardPayCodeAvaliable.push({code:"099", value:"기타카드"});
+}
+	self.cardOnlyPayCode.push("099");
+
+
+self.vacPayCodeAvaliable = [];
+self.vacOnlyPayCode=[];
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("34"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"34", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"34", value:"광주은행"});
+}
+	self.vacOnlyPayCode.push("34");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("39"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"39", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"39", value:"경남은행"});
+}
+	self.vacOnlyPayCode.push("39");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("04"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"04", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"04", value:"국민은행"});
+}
+	self.vacOnlyPayCode.push("04");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("03"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"03", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"03", value:"기업은행"});
+}
+	self.vacOnlyPayCode.push("03");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("11"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"11", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"11", value:"농협"});
+}
+	self.vacOnlyPayCode.push("11");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("31"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"31", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"31", value:"대구은행"});
+}
+	self.vacOnlyPayCode.push("31");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("81"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"81", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"81", value:"하나은행"});
+}
+	self.vacOnlyPayCode.push("81");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("88"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"88", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"88", value:"신한은행"});
+}
+	self.vacOnlyPayCode.push("88");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("23"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"23", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"23", value:"SC은행"});
+}
+	self.vacOnlyPayCode.push("23");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("20"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"20", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"20", value:"우리은행"});
+}
+	self.vacOnlyPayCode.push("20");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("71"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"71", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"71", value:"우체국"});
+}
+	self.vacOnlyPayCode.push("71");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("05"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"05", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"05", value:"외환은행"});
+}
+	self.vacOnlyPayCode.push("05");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("37"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"37", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"37", value:"전북은행"});
+}
+	self.vacOnlyPayCode.push("37");
+
+if("null"=='E'){
+	nor_code_value_e="";
+	switch("32"){
+	case '03' : nor_code_value_e= 'Industrial Bank'    ; break;
+	case '04' : nor_code_value_e= 'Kookmin Bank'    ; break;
+	case '05' : nor_code_value_e= 'Korea Exchange Bank'    ; break;
+	case '11' : nor_code_value_e= 'Nonghyup Bank'    ; break;
+	case '20' : nor_code_value_e= 'Woori Bank'    ; break;
+	case '23' : nor_code_value_e= 'Standard Chartered Bank'    ; break;
+	case '31' : nor_code_value_e= 'Daegu Bank'    ; break;
+	case '32' : nor_code_value_e= 'Busan Bank'    ; break;
+	case '34' : nor_code_value_e= 'Gwangju Bank'    ; break;
+	case '37' : nor_code_value_e= 'Jeonbuk Bank'      ; break;
+	case '39' : nor_code_value_e= 'Kyongnam Bank'      ; break;
+	case '71' : nor_code_value_e= 'Korea Post Office'    ; break;
+	case '81' : nor_code_value_e= 'Hana Bank'    ; break;
+	case '88' : nor_code_value_e= 'Shinhan Bank'    ; break;
+	}
+	self.vacPayCodeAvaliable.push({code:"32", value:nor_code_value_e});
+}else{
+	self.vacPayCodeAvaliable.push({code:"32", value:"부산은행"});
+}
+	self.vacOnlyPayCode.push("32");
+
+
+
+self.cmsPayDt = [];
+
+var pd = new Array();
+
+/* 
+	self.cmsPayDt.push({code:"10", value:"10일"});
+
+	self.cmsPayDt.push({code:"15", value:"15일"});
+
+	self.cmsPayDt.push({code:"25", value:"25일"});
+ */
+
+
+
+	/* var pay_dt_var = "<option value='10'>10일</option>";
+	$("#pay_dt").append(pay_dt_var); */
+	pd.push('10');
+
+	/* var pay_dt_var = "<option value='15'>15일</option>";
+	$("#pay_dt").append(pay_dt_var); */
+	pd.push('15');
+
+	/* var pay_dt_var = "<option value='25'>25일</option>";
+	$("#pay_dt").append(pay_dt_var); */
+	pd.push('25');
+
+
+pd.sort();
+
+// 남양주기독교청년회(27일 고정)
+if("JI9W1PPGVT" == "GBRYAHTKSA") {
+	self.cmsPayDt.push({code:"27", value:"27일"});
+} else {
+	 for(var i = 0 ; i < pd.length ; i++){
+		//var pay_dt_var = "<option value='"+pd[i]+"'>"+pd[i]+"일</option>";
+		//$("#pay_dt").append(pay_dt_var);
+		 if("null"=='E'){
+				self.cmsPayDt.push({code:pd[i], value:pd[i]+"th"});
+		 }else{
+			self.cmsPayDt.push({code:pd[i], value:pd[i]+"일"});
+		 }
+	}
+}
+
+self.hpPayDt = [{code:"05", value:"05일"}];
+self.cardPayDt = [{code:"05", value:"05일"}];
+if("JI9W1PPGVT" == "6XT5KQ8WY0"){
+	if("null"=="null"){
+		alert("올바른 문자충전 접근방식이 아닙니다.\n문자충전은 로그인 후 이용해주시기 바랍니다.")
+		window.close();
+		self.memNm =ko.observable("").extend({required:true,NotWithSpecialCharPattern:true,minLength:2,maxLength:10});
+	}else{
+		self.memNm =ko.observable("null").extend({required:true,NotWithSpecialCharPattern:true,minLength:2,maxLength:10});
+	}
+}else{
+	self.memNm =ko.observable("").extend({required:true,NotWithSpecialCharPattern:true,minLength:2,maxLength:10});
+}
+self.memNm.displayName = "회원명";
+self.memNm.eid="memNm";	
+
+self.memTel1 = ko.observable("").extend({required:true,NumLimitedLengthPattern:{required:true,min:3,max:3}});
+self.memTel1.displayName = "연락처";
+self.memTel1.eid = "memTel1";
+self.memTel2 = ko.observable("").extend({required:true,NumLimitedLengthPattern:{required:true,min:3,max:4}});
+self.memTel2.displayName = "연락처";
+self.memTel2.eid = "memTel2";
+self.memTel3 = ko.observable("").extend({required:true,NumLimitedLengthPattern:{required:true,min:4,max:4}});
+self.memTel3.displayName = "연락처";
+self.memTel3.eid = "memTel3";
+
+self.memTel = ko.computed(function(){
+	return self.memTel1()+self.memTel2()+self.memTel3();
+}).extend({required:true,HpTelPattern:{required:true},onlyHpPattern:{condition:function(){return self.payWayCode()=="CAR";}, msg:"카드자동결제의 경우 연락처에 휴대폰번호만 해주세요"}});
+self.memTel.displayName = "연락처";
+self.memTel.eid = "memTel1";
+
+self.targetMemGrpCode="";
+self.memGrps = [];
+self.memGrpsValues = [];	
+
+
+			
+
+	
+
+self.memGrp = ko.observable("001").extend({required:(function() {
+	return self.memGrpType=="R";
+}())});
+
+if("JI9W1PPGVT" == "ZXV6VR26X0") {
+	self.memGrp.displayName="후원종류";
+} else {
+	self.memGrp.displayName="회원구분";	
+}
+
+self.memGrp.eid="memGrp";
+
+
+self.memDonationJuminNum=ko.observable("");
+//self.memDonationJuminNum=ko.observable("").extend({required:false, DonationJuminNoPattern:true});
+self.memDonationJuminNum.displayName = "주민번호 또는 사업자번호";
+
+/* self.memDonationJuminNum=ko.observable("");
+self.memJuminNum2=ko.observable("");
+
+self.memJuminNum= ko.computed(function(){
+	return self.memDonationJuminNum() +self.memJuminNum2();  
+}).extend({required:(function(){ return self.receiptFlag=="Y" && self.receiptType=="R";}()),DonationJuminNoPattern:{required:(function(){return self.receiptFlag=="Y" && self.receiptType=="R";}())}});
+
+self.memJuminNum.displayName="회원주민번호";
+self.memJuminNum.eid="memDonationJuminNum";  */
+
+/* self.memDonationJuminNum =ko.observable("").extend({required:false, DonationJuminNoPattern:{required:(function(){return self.receiptFlag=="Y" && self.receiptType=="R";}())}});
+self.memDonationJuminNum.displayName = "회원주민번호";
+self.memDonationJuminNum.eid="memDonationJuminNum"; */ 
+
+
+self.emailId=ko.observable("").extend({required:false,NormalLengthPattern:{required:false,min:1,max:50}});
+self.emailId.displayName = "Email주소";
+self.emailId.eid = "emailId";
+self.emailDomain=ko.observable("").extend({required:false,minLength:1,NormalLengthPattern:{required:false,min:1,max:50}});	
+self.emailDomain.displayName = "Email주소";
+self.emailDomain.eid = "emailId";
+
+self.emailAddr = ko.computed(function(){
+	if(self.emailId()!="" && self.emailDomain() !="") {
+		return self.emailId() +"@"+self.emailDomain();
+	}else {
+		return "";
+	}
+//}).extend({required:(function(){return self.emailFlag=="Y" && self.emailType=="R";}()),EmailPattern:{required:(function(){return self.emailtFlag=="Y" && self.emailType=="R";}())}});
+}).extend({required:(function(){return self.emailFlag=="Y" && self.emailType=="R";}())});
+self.emailAddr.displayName = "Email주소";
+self.emailAddr.eid = "emailId";
+
+
+self.memZipCode3 = ko.observable("").extend({required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),NumLimitedLengthPattern:{required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),min:5,max:6}});
+self.memZipCode3.displayName = "주소";
+self.memZipCode3.eid = "memZipCode3";
+/* self.memZipCode2 = ko.observable("").extend({required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),NumLimitedLengthPattern:{required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),min:3,max:3}});
+self.memZipCode2.displayName = "주소";
+self.memZipCode2.eid = "memZipCode2"; */
+self.memAddr1 = ko.observable("").extend({required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),NotWithSpecialCharPattern:true,NormalLengthPattern:{required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),min:1,max:100}});
+self.memAddr1.displayName = "주소";
+self.memAddr1.eid = "memAddr1";
+self.memAddr2 = ko.observable("").extend({required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),NotWithSpecialCharPattern:true,NormalLengthPattern:{required:(function(){return self.addrFlag=="Y" && self.addrType=="R";}()),min:0,max:100}});
+self.memAddr2.displayName = "주소";
+self.memAddr2.eid = "memAddr2";
+
+
+self.recommend = ko.observable("").extend({required:(function(){return self.recommendFlag=="Y" && self.recommendType=="R";}()),NotWithSpecialCharPattern:true,NormalLengthPattern:{required:(function(){return self.recommendFlag=="Y" && self.recommendType=="R";}()),min:1,max:100}});
+
+self.recommend.displayName = "추천인";
+self.recommend.eid = "recommend";
+
+self.payGrps = [];
+self.payGrpsValues = [];    
+
+
+		 
+	
+
+self.payGrp = ko.observable("001").extend({required:(function() {
+	return self.payGrpType=="R";
+}())});
+self.payGrp.displayName="납부유형";
+self.payGrp.eid="payGrp";
+
+self.memTypes = [];
+self.memTypesValues = [];    
+if("null"=='E'){
+	self.memTypes.push({code:"01", value:"Individual"});
+	self.memTypes.push({code:"02", value:"Enterprise"});
+	self.memTypes.push({code:"03", value:"Group"});
+}else{
+	self.memTypes.push({code:"01", value:"개인"});
+	self.memTypes.push({code:"02", value:"기업"});
+	self.memTypes.push({code:"03", value:"단체"});
+}
+self.memTypesValues.push("01");
+self.memTypesValues.push("02");
+self.memTypesValues.push("03");
+
+self.memType = ko.observable("01").extend({required:(function() {
+	return self.memTypeType=="R";
+}())});
+self.memType.displayName="회원분류";
+self.memType.eid="memType";
+
+self.memTitle = ko.observable("").extend({required:(function(){return self.memTitleFlag=="Y" && self.memTitleType=="R";}()),NotWithSpecialCharPattern:true,NormalLengthPattern:{required:(function(){return self.memTitleFlag=="Y" && self.memTitleType=="R";}()),min:1,max:100}});
+self.memTitle.displayName = "직함";
+self.memTitle.eid = "memTitle";
+
+self.companyStation = ko.observable("").extend({required:(function(){return self.companyStatFlag=="Y" && self.companyStatType=="R";}()),NotWithSpecialCharPattern:true,NormalLengthPattern:{required:(function(){return self.companyStatFlag=="Y" && self.companyStatType=="R";}()),min:1,max:100}});
+self.companyStation.displayName = "부서";
+self.companyStation.eid = "companyStation";
+
+self.params ={};
+self.params.memPayTypes = ['R','T'];
+self.memPayType = ko.observable("").extend({RadioSelectCheckPattern:self.params.memPayTypes, EqualsPattern:{
+	testVal:"R", condition:function() {return self.payWayCode()=="CMS";}, showMsg:"해당 결제수단의 경우 정기결제만 가능합니다"
+	}
+}); // TODO	
+self.memPayType.displayName="결제방식";
+self.memPayType.eid= "";
+
+
+self.params.payType = ['CMS','MOB','CAR','VAC'];
+self.payWayCode = ko.observable("").extend({RadioSelectCheckPattern:self.params.payType});
+self.payWayCode.displayName="결제수단";
+self.payWayCode.eid="payway_code";
+
+self.memPayType("R");
+
+self.params.isCms = ko.computed(function(){
+	return self.payWayCode()=="CMS";
+});
+self.params.isHp = ko.computed(function(){
+	return self.payWayCode()=="MOB";
+});
+self.params.isCard = ko.computed(function(){
+	return self.payWayCode()=="CAR";
+});
+self.params.isVac = ko.computed(function(){
+	return self.payWayCode()=="VAC";
+});
+
+
+//TODO CMS이며 일시인 경우만 체크 
+self.bankCd = ko.observable("");
+self.vacBankCd = ko.observable("");
+self.cardCd = ko.observable("");
+self.hpCd = ko.observable("").extend({
+	RadioSelectCheckPattern: {
+			params: self.hpOnlyPayCode,
+			onlyIf: function () { 
+			  return self.params.isHp();
+			}
+		  }
+		});
+
+self.hpCd.displayName=ko.computed(function() {
+		if(self.payWayCode()=="CMS" || self.payWayCode()=="VAC") {
+			if("null"=='E'){
+				return "Bank";
+			}else{
+				return "은행";
+			}
+		} else if(self.payWayCode()=="MOB") {
+			if("null"=='E'){
+				return "News agency";
+			}else{
+				return "통신사";
+			}
+		} else if(self.payWayCode()=="CAR") {
+			if("null"=='E'){
+				return "Credit card company";
+			}else{
+				return "신용카드사";
+			}
+		}
+		//return self.payWayCode()=="CMS"?"은행":"통신사";
+	}
+);
+self.hpCd.eid="pay_code";
+
+self.payCd = ko.computed(function(){
+	if(self.payWayCode()=="CMS"){
+		return self.bankCd();
+	} else if(self.payWayCode()=="VAC") {
+		return self.vacBankCd();
+	} else if(self.payWayCode()=="MOB") {
+		return self.hpCd();
+	} else if(self.payWayCode()=="CAR") {
+		return self.cardCd();
+	}
+});
+
+self.hpCdNm = ko.computed(function(){
+	if(self.hpCd()=="SKT") {
+		return "SK텔레콤";
+	} else if(self.hpCd()=="KTF") {
+		return "KT";
+	} else if(self.hpCd()=="LGT") {
+		return "LG U+";
+	}
+});
+
+
+self.hpNm= ko.observable("").extend({required:true,NotWithSpecialCharPattern:true,minLength:1, maxLength:30});
+/* self.hpNm= ko.observable("").extend({required:{onlyIf:function(){
+	return self.payWayCode()=="CMS" || self.payWayCode()=="CAR" || self.payWayCode()=="MOB";
+}},
+NotWithSpecialCharPattern:true,minLength:1, maxLength:10}); */
+
+self.hpNm.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS" || self.payWayCode()=="VAC") {
+		if("null"=='E'){
+			return "Deposit Account Name";
+		}else{
+			return "예금주명";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Name";
+		}else{
+			return "가입자명";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Name of Subscriber";
+		}else{
+			return "명의자명";
+		}
+	}
+	
+});
+self.hpNm.eid="hpNm";
+
+self.hpNo1 = ko.observable("");
+self.hpNo1.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+});
+self.hpNo1.eid="hpNo2";
+
+self.hpNo2 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isHp();
+}},
+NumLimitedLengthPattern:{required:false,min:3,max:4}});
+self.hpNo2.displayName=ko.computed(function() {
+	return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+});
+self.hpNo2.eid="hpNo2";
+
+self.hpNo3 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isHp();
+}},
+NumLimitedLengthPattern:{required:false,min:4,max:4}});
+self.hpNo3.displayName=ko.computed(function() {
+	return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+});
+self.hpNo3.eid="hpNo2";
+
+
+self.cardNo1 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isCard();
+}},
+NumLimitedLength2Pattern:{required:false,min:4,max:4}});
+self.cardNo1.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+}
+);
+self.cardNo1.eid="cardNo1";
+
+self.cardNo2 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isCard();
+}},
+NumLimitedLength2Pattern:{required:false,min:4,max:4}});
+self.cardNo2.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+}
+);
+self.cardNo2.eid="cardNo2";
+
+self.cardNo3 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isCard();
+}},
+NumLimitedLength2Pattern:{required:false,min:4,max:4}});
+self.cardNo3.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+}
+);
+self.cardNo3.eid="cardNo3";
+
+self.cardNo4 = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isCard();
+}},
+//카드 자리수는 14~16자리
+NumLimitedLengthPattern:{required:false,min:2,max:4}});
+self.cardNo4.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"결제휴대폰";
+}
+);
+self.cardNo4.eid="cardNo4";
+
+self.yearOfCard=ko.observable("");
+self.monthOfCard=ko.observable("");
+self.validCard = ko.computed(function(){
+	return self.yearOfCard()+""+self.monthOfCard();
+}).extend({
+	MinMonthOfDatePattern:{condition:function(){return self.payWayCode()=="CAR"}, 
+		minMonth:parent.parent.month,
+		msg:"유효기간이 경과한 카드는 등록할 수 없습니다."}});
+
+self.acctNo = ko.observable("").extend({required:{onlyIf: function () { 
+	  return self.params.isCms();
+	}},
+	NumLimitedLengthPattern:{required:false,min:8,max:15}});
+self.acctNo.displayName="계좌번호";
+self.acctNo.eid="acctNo";
+
+self.hpNum= ko.computed(function(){
+	if(self.payWayCode()=="MOB") {
+		self.cardNo1("");
+		self.cardNo2("");
+		self.cardNo3("");
+		self.cardNo4("");
+		self.acctNo("");
+		self.juminNum1("");
+		
+		return self.hpNo1()+""+self.hpNo2()+""+self.hpNo3();			
+	} else if(self.payWayCode()=="CAR") {
+		self.hpNo1("");
+		self.hpNo2("");
+		self.hpNo3("");
+		self.acctNo("");
+		self.juminNum1("");
+		
+		return self.cardNo1()+""+self.cardNo2()+""+self.cardNo3()+""+self.cardNo4();	
+	} else if(self.payWayCode()=="CMS") {
+		self.cardNo1("");
+		self.cardNo2("");
+		self.cardNo3("");
+		self.cardNo4("");
+		self.hpNo1("");
+		self.hpNo2("");
+		self.hpNo3("");
+		self.juminNum1("");
+		
+		return self.acctNo();	
+	} else if(self.payWayCode()=="VAC") {
+		self.cardNo1("");
+		self.cardNo2("");
+		self.cardNo3("");
+		self.cardNo4("");
+		self.hpNo1("");
+		self.hpNo2("");
+		self.hpNo3("");
+		self.juminNum1("");
+		self.acctNo("1111111111");  
+		
+		return self.acctNo();  
+	} 
+});
+self.hpNum.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Account Number";
+		}else{
+			return "계좌번호";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Payment Mobile Phone";
+		}else{
+			return "결제휴대폰";
+		}
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Credit Card";
+		}else{
+			return "신용카드";
+		}
+	}
+	//return self.payWayCode()=="CMS"?"계좌번호":"휴대폰번호";
+});
+//self.hpNum.eid="pay_tel1";
+
+self.hpNumFormat= ko.computed(function(){
+	return self.hpNo1()+"-"+self.hpNo2()+"-"+self.hpNo3();
+});
+self.cardNumFormat= ko.computed(function(){
+	return self.cardNo1()+"-"+self.cardNo2()+"-"+self.cardNo3()+"-"+self.cardNo4();
+});
+/********************************************************************************************************************/
+self.juminNum1=ko.observable("").extend({NumLimitedLengthPatternForVac:{condition:function(){return self.payWayCode()!="VAC";},required:true,min:6,max:10}});
+self.juminNum1.displayName = "생년월일";
+self.juminNum2=ko.observable("").extend({NumLimitedLengthPatternForVac:{condition:function(){return self.payWayCode()!="VAC";},min:0,max:1}});
+self.juminNum2.displayName = "주민번호 뒤 1자리";
+
+self.juminNum= ko.computed(function(){
+	if(self.payWayCode()=="CMS") {
+		self.juminNum2("");
+		return self.juminNum1();  
+	} else if(self.payWayCode()=="MOB") {
+		return self.juminNum1() +self.juminNum2();  
+	} else if(self.payWayCode()=="CAR") {
+		self.juminNum2("");
+		return self.juminNum1();
+	} else if(self.payWayCode()=="VAC") {
+		self.juminNum1("111111");
+		self.juminNum2("");
+		return self.juminNum1();
+	}
+}).extend({required:true,NewJuminNoPattern2:{paywayCode:self.payWayCode}});
+
+
+self.juminNum.displayName=ko.computed(function() {
+	if(self.payWayCode()=="CMS") {
+		if("null"=='E'){
+			return "Date of Birth";
+		}else{
+			return "생년월일";
+		}
+	} else if(self.payWayCode()=="MOB") {
+		if("null"=='E'){
+			return "Date of Birth";
+		}else{
+			return "생년월일";
+		}
+		//return "주민번호";
+	} else if(self.payWayCode()=="CAR") {
+		if("null"=='E'){
+			return "Date of Birth or<br/>Business Number";
+		}else{
+			return "생년월일<br/>사업자번호";
+		}
+	}
+});	
+
+self.juminNum.eid="juminNum1";	
+
+
+
+//정기후원일 체크 
+self.payDt = ko.observable("").extend({required: {
+	onlyIf: function () { 
+		return self.memPayType()=="R";
+	  }
+	}});
+if("null"=='E'){
+	self.payDt.displayName ="Regular Payment Date";
+}else{
+	self.payDt.displayName ="정기결제일";
+}
+
+self.moneyRange={};
+self.moneyRange.min=ko.computed(function(){
+		/* if(self.payWayCode()=="CMS") {
+			return parseInt("0",10);
+		} else if(self.payWayCode()=="MOB") {
+			return parseInt("0",10);
+		} else if(self.payWayCode()=="CAR") {
+			return parseInt("0",10);
+		} */		
+		return parseInt("0",10);
+		//return self.payWayCode()=="CMS"?parseInt("0",10):parseInt("0",10);
+	});
+self.moneyRange.minText=ko.computed(function(){
+		/* if(self.payWayCode()=="CMS") {
+			return root.commNumberFormat("0");
+		} else if(self.payWayCode()=="MOB") {
+			return root.commNumberFormat("0");
+		} else if(self.payWayCode()=="CAR") {
+			return root.commNumberFormat("0");
+		} */		
+		return root.commNumberFormat("0");
+		//return self.payWayCode()=="CMS"?parseInt("0",10):parseInt("0",10);
+	});
+	
+self.moneyRange.max= ko.computed(function(){
+	if(self.payWayCode()=="CMS") {
+		return parseInt("10000000",10);
+	} else if(self.payWayCode()=="MOB") {
+		return parseInt("10000000",10);
+	} else if(self.payWayCode()=="CAR") {
+		return parseInt("10000000",10);
+	} else if(self.payWayCode()=="VAC") {
+		return 1000000000;
+	} 		
+	//return self.payWayCode()=="CMS"?parseInt("10000000",10):parseInt("10000000",10);
+});
+
+
+
+
+
+
+
+
+	self.params.confirmAmountRange = [];
+	self.params.confirmAmountValues = [];
+	if(_.isNaN(self.moneyRangeS)==false && self.moneyRangeS!="0") {
+		if("null"=='E'){
+			self.params.confirmAmountRange.push({code:self.moneyRangeS,value:root.commNumberFormat(self.moneyRangeS)+"won"});
+		}else{
+			self.params.confirmAmountRange.push({code:self.moneyRangeS,value:root.commNumberFormat(self.moneyRangeS)+"원"});
+		}
+		self.params.confirmAmountValues.push(self.moneyRangeS);
+	}
+	if(_.isNaN(self.moneyRangeM)==false && self.moneyRangeM!="0") {
+		if("null"=='E'){
+			self.params.confirmAmountRange.push({code:self.moneyRangeM,value:root.commNumberFormat(self.moneyRangeM)+"won"});
+		}else{
+			self.params.confirmAmountRange.push({code:self.moneyRangeM,value:root.commNumberFormat(self.moneyRangeM)+"원"});
+		}
+		self.params.confirmAmountValues.push(self.moneyRangeM);
+	}
+	if(_.isNaN(self.moneyRangeL)==false && self.moneyRangeL!="0") {
+		if("null"=='E'){
+			self.params.confirmAmountRange.push({code:self.moneyRangeL,value:root.commNumberFormat(self.moneyRangeL)+"won"});
+		}else{
+			self.params.confirmAmountRange.push({code:self.moneyRangeL,value:root.commNumberFormat(self.moneyRangeL)+"원"});
+		}
+		self.params.confirmAmountValues.push(self.moneyRangeL);
+	}
+	if("null"=='E'){
+		self.params.confirmAmountRange.push({code:"0",value:"Direct Input"});
+	}else{
+		self.params.confirmAmountRange.push({code:"0",value:"직접입력"});
+	}
+	self.params.confirmAmountValues.push("0"); 
+
+	self.tmpConfirmAmount = ko.observable("");
+	self.tmpConfirmAmount2 = ko.observable("");
+	self.tmpConfirmAmountCheck = ko.computed(function(){
+		if(self.moneyType=="C") {
+			if(self.tmpConfirmAmount()!="0" && self.tmpConfirmAmount()!="") {
+				self.tmpConfirmAmount2("0");
+				self.confirmAmount(root.stripFormat(self.tmpConfirmAmount()));
+			}
+			if(self.tmpConfirmAmount2()!="0" && self.tmpConfirmAmount2()!="") {
+				self.confirmAmount(root.stripFormat(self.tmpConfirmAmount2()));
+			}
+		}
+	});
+
+	
+	self.confirmAmount = ko.observable("").extend({required:true,MoneyRangePattern:self.moneyRange});
+	
+
+
+
+self.confirmAmount.displayName="결제금액";
+self.confirmAmount.eid="pay_amount";
+
+
+self.transactionuniqNum = ko.observable("");
+self.transactionKey = ko.observable("");
+self.validCancelDate = ko.observable("");
+self.resultYn = ko.observable("");
+self.resultCode = ko.observable("");
+self.inMemNo= ko.observable("");
+
+self.payWayAvailableTmp = [];
+self.payWayAvailable = [];
+
+if(self.cmsOpen=="Y" && self.cmsFlag=="Y") {
+	if("null"=='E'){
+		self.payWayAvailable.push({code:"CMS",value:"Direct Debit(CMS)"});
+	}else{
+		self.payWayAvailable.push({code:"CMS",value:"자동이체(CMS)"});
+	}
+}
+
+if(self.cardOpen=="Y" && self.cardFlag=="Y") {
+	if(self.cardPayType=="A") {
+		if("null"=='E'){
+			self.payWayAvailable.push({code:"CAR",value:"Paying Credit"});
+			self.payWayAvailableTmp.push({code:"CAR",value:"Paying Credit"});
+		}else{
+			self.payWayAvailable.push({code:"CAR",value:"카드결제"});
+			self.payWayAvailableTmp.push({code:"CAR",value:"카드결제"});
+		}
+	} else if(self.cardPayType=="R") {
+		if("null"=='E'){
+			self.payWayAvailable.push({code:"CAR",value:"Paying Credit"});
+		}else{
+			self.payWayAvailable.push({code:"CAR",value:"카드결제"});
+		}
+	}  else if(self.cardPayType=="T") {
+		if("null"=='E'){
+			self.payWayAvailableTmp.push({code:"CAR",value:"Paying Credit"});
+		}else{
+			self.payWayAvailableTmp.push({code:"CAR",value:"카드결제"});
+		}
+	} 
+}
+
+if(self.hpOpen=="Y" && self.hpFlag=="Y") {
+	if(self.hpPayType=="A") {
+		if("null"=='E'){
+			self.payWayAvailable.push({code:"MOB",value:"Mobile Phone Billing"});
+			self.payWayAvailableTmp.push({code:"MOB",value:"Mobile Phone Billing"});
+		}else{
+			self.payWayAvailable.push({code:"MOB",value:"휴대폰"});
+			self.payWayAvailableTmp.push({code:"MOB",value:"휴대폰"});
+		}
+	} else if(self.hpPayType=="R") {
+		if("null"=='E'){
+			self.payWayAvailable.push({code:"MOB",value:"Mobile Phone Billing"});
+		}else{
+			self.payWayAvailable.push({code:"MOB",value:"휴대폰"});
+		}
+	}  else if(self.hpPayType=="T") {
+		if("null"=='E'){
+			self.payWayAvailableTmp.push({code:"MOB",value:"Mobile Phone Billing"});
+		}else{
+			self.payWayAvailableTmp.push({code:"MOB",value:"휴대폰"});
+		}
+	} 
+}
+
+// 가상계좌
+if(self.vacOpen=="Y" && self.vacFlag == "Y") {
+	if("null"=='E'){
+		self.payWayAvailableTmp.push({code:"VAC",value:"Virtual Account"});
+	}else{
+		self.payWayAvailableTmp.push({code:"VAC",value:"가상계좌"});
+	}
+} 
+
+self.payWayCode(self.payWayAvailable.length >0?self.payWayAvailable[0].code:self.payWayAvailableTmp[0].code);
+
+self.payWayCode.subscribe(function(newValue){
+	self.payDt("");
+	
+	if(newValue == "VAC") {
+		self.hpNm(self.memNm());
+	} else if(newValue == "MOB") {
+		/* self.juminNum2("1"); */
+		self.hpNm("");
+	} else {
+		self.hpNm("");
+	}
+	
+});
+self.memPayType(self.payWayAvailable.length >0?"R":"T");
+
+self.memPayType.subscribe(function(newValue){		
+	if(newValue=="T") {
+		self.payWayCode(self.payWayAvailableTmp[0].code);
+		self.payDt("");
+	} else if(newValue=="R") {
+		self.payWayCode(self.payWayAvailable[0].code);
+	}		
+});
+
+self.bannerId = ko.observable("JI9W1PPGVT");
+
+self.token = ko.observable("").extend({required: {
+	onlyIf: function () { 
+		return self.payWayCode()=="MOB" && self.introMode();
+	  }
+ }});	
+self.smsVal = ko.observable("").extend({required:{
+	onlyIf: function () { 
+		return self.payWayCode()=="MOB" && self.introMode();
+	  }
+ },minLength:6,maxLength:6});
+self.smsVal.displayName = "인증번호";
+self.smsVal.eid="smsVal";
+
+
+
+self.agree1Param = new Object();
+self.agree1Param["condition"] = function() {return self.memPayType()=="R";};
+self.agree1Param["testVal"] = "true";
+self.agree1Param["message"] ="자동결제에 동의해 주세요";
+
+self.agree1 = ko.observable("").extend({EqualsPattern: {testVal:true,condition:function() {return self.memPayType()=="R";},showMsg:"자동결제에 동의해 주세요"} });
+
+self.agree1.displayName ="자동결제동의";
+self.agree1.eid ="agree1";
+
+self.agree2Param = new Object();
+self.agree2Param["condition"] = function() {return true;};
+self.agree2Param["testVal"] = true;
+self.agree2Param["showMsg"] ="이용약관과 개인정보 취급방침에 동의해 주세요. ";
+
+self.agree2 = ko.observable("").extend({EqualsPattern: self.agree2Param});	
+self.agree2.displayName ="이용약관과 개인정보";
+self.agree2.eid ="agree2";
+
+//모금가협회 예외처리
+
+
+self.checkAgree = ko.computed(function(){
+	//TODO 동의 체크 
+});
+
+self.hpAuthMD = new function() {
+	var subSelf = this;
+	subSelf.mediaType = ko.observable("B");
+	subSelf.bannerId = ko.observable("JI9W1PPGVT");
+	subSelf.smsVal = ko.computed(function(){
+		return self.smsVal();
+	}).extend({required:true,NumLimitedLengthPattern:{required:true,min:6,max:6}});
+	subSelf.smsVal.displayName = "인증번호";
+	subSelf.smsVal.eid= "smsVal";
+	subSelf.payWayCode = ko.computed(function(){
+		return self.payWayCode();
+	});
+	subSelf.hpNm = ko.computed(function(){
+		return self.hpNm();
+	});
+	subSelf.confirmAmount = ko.computed(function(){
+		return self.confirmAmount();
+	});
+	subSelf.hpCd = ko.computed(function(){
+		return self.hpCd();
+	});
+	subSelf.hpNo1 = ko.computed(function(){
+		return self.hpNo1();
+	});
+	subSelf.hpNo2 = ko.computed(function(){
+		return self.hpNo2();
+	});
+	subSelf.hpNo3 = ko.computed(function(){
+		return self.hpNo3();
+	});
+	subSelf.hpNum= ko.computed(function(){
+		return self.hpNum();
+	});
+	subSelf.juminNum = ko.computed(function(){
+		return self.juminNum();
+	});	
+	subSelf.token = ko.computed(function(){
+		return self.token();
+	});	
+
+	/* subSelf.gender = ko.computed(function(){
+		return self.gender();
+	}); */
+	
+	subSelf.memGrp = ko.computed(function(){
+		return self.memGrp();
+	});
+	subSelf.memTel1 = ko.computed(function(){
+		return self.memTel1();
+	});	
+	subSelf.memTel2 = ko.computed(function(){
+		return self.memTel2();
+	});	
+	subSelf.memTel3 = ko.computed(function(){
+		return self.memTel3();
+	});
+
+/* 	subSelf.memDonationJuminNum = ko.computed(function(){
+		return self.memDonationJuminNum();
+	});	
+	subSelf.memJuminNum2 = ko.computed(function(){
+		return self.memJuminNum2();
+	});	
+	subSelf.payEndDate = ko.computed(function(){
+		return self.payEndDate();
+	});	 */
+	
+	// 
+	subSelf.mem_post_cd3 = ko.computed(function(){
+		return self.memZipCode3();
+	});
+	subSelf.mem_addr1 = ko.computed(function(){
+		return self.memAddr1();
+	});
+	subSelf.mem_addr2 = ko.computed(function(){
+		return self.memAddr2();
+	});
+	/* subSelf.mem_id = ko.computed(function(){
+		return self.memId();
+	}); */
+	/* subSelf.mem_mng_no = ko.computed(function(){
+		return self.memManageNo();
+	}); */
+	/* subSelf.mem_memo = ko.computed(function(){
+		return self.memMemo();
+	}); */
+	subSelf.mem_paytype = ko.computed(function(){
+		return self.memPayType();
+	});
+
+	subSelf.pay_dt = ko.computed(function(){
+		return self.payDt();
+	});
+	subSelf.donation_jumin_num = ko.computed(function(){
+		return self.memDonationJuminNum();
+	});
+	subSelf.mem_email = ko.computed(function(){
+		return self.emailAddr();
+	});
+	subSelf.mem_email_id = ko.computed(function(){
+		return self.emailId();
+	});
+	subSelf.mem_email_domain = ko.computed(function(){
+		return self.emailDomain();
+	});
+	subSelf.recommend = ko.computed(function(){
+		return self.recommend();
+	});
+	subSelf.paygrp_grp_code = ko.computed(function(){
+		return self.payGrp();
+	});
+	subSelf.mem_type = ko.computed(function(){
+		return self.memType();
+	});
+	subSelf.mem_title = ko.computed(function(){
+		return self.memTitle();
+	});
+	subSelf.company_station = ko.computed(function(){
+		return self.companyStation();
+	});
+};
+
+self.cardConfirmMD = new function() {
+	var subSelf = this;
+	subSelf.mediaType = ko.observable("B");
+	subSelf.bannerId = ko.observable("JI9W1PPGVT");
+	subSelf.smsVal = "";
+	
+	subSelf.payWayCode = ko.computed(function(){
+		return self.payWayCode();
+	});
+	subSelf.hpNm = ko.computed(function(){
+		return self.hpNm();
+	});
+	subSelf.confirmAmount = ko.computed(function(){
+		return self.confirmAmount();
+	});
+	subSelf.hpCd = ko.computed(function(){
+		return self.payCd();
+	});	
+	subSelf.telNo = ko.computed(function(){
+		return self.memTel();
+	});		
+	subSelf.hpNum= ko.computed(function(){
+		return self.hpNum();
+	});
+	subSelf.juminNum = ko.computed(function(){
+		return self.juminNum();
+	});	
+	/* subSelf.gender = ko.computed(function(){
+		return self.gender();
+	}); */ 
+	subSelf.token = ko.computed(function(){
+		return self.token();
+	});
+	subSelf.yearOfCard = ko.computed(function(){
+		return self.yearOfCard();
+	});
+	subSelf.monthOfCard = ko.computed(function(){
+		return self.monthOfCard();
+	});
+	subSelf.validCancelDate= ko.computed(function(){
+		return self.validCancelDate();
+	});
+	
+	subSelf.memGrp = ko.computed(function(){
+	return self.memGrp();
+	});
+	subSelf.memTel1 = ko.computed(function(){
+		return self.memTel1();
+	});	
+	subSelf.memTel2 = ko.computed(function(){
+		return self.memTel2();
+	});	
+	subSelf.memTel3 = ko.computed(function(){
+		return self.memTel3();
+	});
+
+	/* subSelf.memDonationJuminNum = ko.computed(function(){
+		return self.memDonationJuminNum();
+	});	
+	subSelf.memJuminNum2 = ko.computed(function(){
+		return self.memJuminNum2();
+	});	 
+	subSelf.payEndDate = ko.computed(function(){
+		return self.payEndDate();
+	});	*/	
+	
+	subSelf.mem_post_cd3 = ko.computed(function(){
+		return self.memZipCode3();
+	});
+	subSelf.mem_addr1 = ko.computed(function(){
+		return self.memAddr1();
+	});
+	subSelf.mem_addr2 = ko.computed(function(){
+		return self.memAddr2();
+	});
+	/* subSelf.mem_id = ko.computed(function(){
+		return self.memId();
+	}); */
+	/* subSelf.mem_mng_no = ko.computed(function(){
+		return self.memManageNo();
+	}); */
+	/* subSelf.mem_memo = ko.computed(function(){
+		return self.memMemo();
+	}); */
+	subSelf.mem_paytype = ko.computed(function(){
+		return self.memPayType();
+	});
+
+	subSelf.pay_dt = ko.computed(function(){
+		return self.payDt();
+	});
+	subSelf.donation_jumin_num = ko.computed(function(){
+		return self.memDonationJuminNum();
+	});
+	subSelf.mem_email = ko.computed(function(){
+		return self.emailAddr();
+	});
+	subSelf.mem_email_id = ko.computed(function(){
+		return self.emailId();
+	});
+	subSelf.mem_email_domain = ko.computed(function(){
+		return self.emailDomain();
+	});
+	subSelf.recommend = ko.computed(function(){
+		return self.recommend();
+	});
+	subSelf.paygrp_grp_code = ko.computed(function(){
+		return self.payGrp();
+	});
+	subSelf.mem_type = ko.computed(function(){
+		return self.memType();
+	});
+	subSelf.mem_title = ko.computed(function(){
+		return self.memTitle();
+	});
+	subSelf.company_station = ko.computed(function(){
+		return self.companyStation();
+	});
+};
+
+// 가상계좌
+self.vacConfirmMD = new function() {
+	var subSelf = this;
+	subSelf.mediaType = ko.observable("B");
+	subSelf.bannerId = ko.observable("JI9W1PPGVT");
+	subSelf.smsVal = "";
+	
+	subSelf.payWayCode = ko.computed(function(){
+		return self.payWayCode();
+	});
+	subSelf.hpNm = ko.computed(function(){
+		return self.hpNm();
+	});
+	subSelf.confirmAmount = ko.computed(function(){
+		return self.confirmAmount();
+	});
+	subSelf.hpCd = ko.computed(function(){
+		return self.vacBankCd();
+	}); 
+	subSelf.telNo = ko.computed(function(){
+		return self.memTel();
+	});     
+	subSelf.hpNum= ko.computed(function(){
+		return self.hpNum();
+	});
+	subSelf.juminNum = ko.computed(function(){
+		return self.juminNum();
+	}); 
+	/* subSelf.gender = ko.computed(function(){
+		return self.gender();
+	}); */ 
+	subSelf.token = ko.computed(function(){
+		return self.token();
+	});
+	/* subSelf.yearOfCard = ko.computed(function(){
+		return self.yearOfCard();
+	});
+	subSelf.monthOfCard = ko.computed(function(){
+		return self.monthOfCard();
+	}); */
+	/* subSelf.validCancelDate= ko.computed(function(){
+		return self.validCancelDate();
+	}); */
+	
+	subSelf.memGrp = ko.computed(function(){
+	return self.memGrp();
+	}); 
+	subSelf.memTel1 = ko.computed(function(){
+		return self.memTel1();
+	}); 
+	subSelf.memTel2 = ko.computed(function(){
+		return self.memTel2();
+	}); 
+	subSelf.memTel3 = ko.computed(function(){
+		return self.memTel3();
+	});
+
+	/* subSelf.memDonationJuminNum = ko.computed(function(){
+		return self.memDonationJuminNum();
+	}); 
+	subSelf.memJuminNum2 = ko.computed(function(){
+		return self.memJuminNum2();
+	});  
+	subSelf.payEndDate = ko.computed(function(){
+		return self.payEndDate();
+	}); */  
+	
+	subSelf.mem_post_cd3 = ko.computed(function(){
+		return self.memZipCode3();
+	});
+	subSelf.mem_addr1 = ko.computed(function(){
+		return self.memAddr1();
+	});
+	subSelf.mem_addr2 = ko.computed(function(){
+		return self.memAddr2();
+	});
+	/* subSelf.mem_id = ko.computed(function(){
+		return self.memId();
+	}); */
+	/* subSelf.mem_mng_no = ko.computed(function(){
+		return self.memManageNo();
+	}); */
+	/* subSelf.mem_memo = ko.computed(function(){
+		return self.memMemo();
+	}); */
+	subSelf.mem_paytype = ko.computed(function(){
+		return self.memPayType();
+	});
+
+	subSelf.pay_dt = ko.computed(function(){
+		return self.payDt();
+	});
+	subSelf.donation_jumin_num = ko.computed(function(){
+		return self.memDonationJuminNum();
+	});
+	subSelf.mem_email = ko.computed(function(){
+		return self.emailAddr();
+	});
+	subSelf.mem_email_id = ko.computed(function(){
+		return self.emailId();
+	});
+	subSelf.mem_email_domain = ko.computed(function(){
+		return self.emailDomain();
+	});
+	subSelf.recommend = ko.computed(function(){
+		return self.recommend();
+	});
+	subSelf.paygrp_grp_code = ko.computed(function(){
+		return self.payGrp();
+	});
+	subSelf.mem_type = ko.computed(function(){
+		return self.memType();
+	});
+	subSelf.mem_title = ko.computed(function(){
+		return self.memTitle();
+	});
+	subSelf.company_station = ko.computed(function(){
+		return self.companyStation();
+	});
+};
+}
+
+function formMD(parent) {
+var self = this;
+var submitProgress = "N";
+
+self.parent = parent;
+self.formValueMD = new formValueMD(self);	
+self.returnData = ko.observable({});
+self.processStatus = ko.observable(false);
+
+ko.utils.extend(self.formValueMD,CustomValidator);
+ko.utils.extend(self.formValueMD.hpAuthMD,CustomValidator);
+
+self.tmpJuminNum2 = ko.observable("");
+
+self.goSign = function(){		
+	$("#sign-layer").dialog("close");
+	popupFrame.location.href="/Nanum/nanum/comm/esign/kcbSignBase?ssn="+self.formValueMD.juminNum1()+self.tmpJuminNum2();
+};
+
+self.registMember = function(){
+	function dateCheck(date){
+		var year = date.substr(0,2);
+		var month = date.substr(2,2);
+		var day = date.substr(4,2);
+		var now = new Date();
+		var nYear = now.getFullYear();
+
+		if(month<1||month>12){
+			alert("생년월일/사업자번호 오류입니다.")
+			return false;
+		}
+		if(day<1||day>31){
+			alert("생년월일/사업자번호 오류입니다.")
+			return false;
+		}
+		if((month==4||month==6||month==9||month==11)&&day==31){
+			alert("생년월일/사업자번호 오류입니다.")
+			return false;
+		}
+		if(month==2&&day>29){
+			alert("생년월일/사업자번호 오류입니다.")
+			return false;
+		}
+		return true;
+	}
+	$("#confirmAmount").trigger("change");
+	$("#hpCd").trigger("change");
+	$("#juminNum1").trigger("change");
+	$("#juminNum2").trigger("change");
+	$("#emailDomain").trigger("change");
+	$("#emailId").trigger("change");
+	/* $("#memZipCode1").trigger("change"); */
+	/* $("#memZipCode2").trigger("change"); */
+	$("#memZipCode3").trigger("change");
+	$("#memAddr1").trigger("change");
+	$("#memAddr2").trigger("change");
+	
+	$("#hpNo1").trigger("change");
+	$("#hpNo2").trigger("change");
+	$("#hpNo3").trigger("change");
+	
+	
+	if(self.formValueMD.payWayCode() == 'VAC') {
+		self.formValueMD.hpNm(self.formValueMD.memNm());
+	}
+	
+	var jsonStr = root.toJsonOnlyObservable(self.formValueMD);
+	//console.log(jsonStr);
+
+	if(self.formValueMD.memDonationJuminNum().length==10||self.formValueMD.memDonationJuminNum().length==0||self.formValueMD.memDonationJuminNum().length==13){
+	}else{
+		alert("기부금 영수증 발급을 위한 주민번호/사업자번호는 10자 또는 13자를 적어주셔야합니다.")
+		return false;
+	}
+	var isValid = self.formValueMD.validate(false);
+	
+	if(isValid==false) return false;	
+
+	////console.log(submitProgress);
+	if(self.formValueMD.payWayCode()!='VAC') {
+		if($("#juminNum1").val().length==6){
+			if(dateCheck($("#juminNum1").val())){
+				
+			}else{
+				return false;
+			}
+		}else if($("#juminNum1").val().length==10){
+			
+		}else if(self.formValueMD.payWayCode()=='CAR'){
+			alert("생년월일 6자리와 또는 법인번호 10자리를 정확히 입력해주세요.")
+			return false;
+		}else{
+			alert("생년월일 6자리를 정확히 입력해주세요.")
+			return false;
+		}
+	}
+	if(submitProgress == "Y") {
+		alert("결제가 진행중입니다. 잠시 기다려주세요");
+		return false;
+	} 
+	////console.log("callFunction: "+submitProgress);
+	submitProgress = "Y";
+	////console.log("setVar: "+submitProgress);
+
+	//alert(1);
+	if(self.formValueMD.payWayCode()=='CMS') {//계좌조회
+		//customBlockUI();
+		////console.log($.blockUI);
+		$.ajax({ 
+			  type: 'POST', 
+			  url: "/Nanum/nanum/comm/makeSureAccount.nanum", 
+			  data: { strResId: self.formValueMD.juminNum().substr(0,6), strNm:self.formValueMD.hpNm(), strBankCode:self.formValueMD.payCd(), strAccountNo:self.formValueMD.hpNum() },
+			  beforeSend: function(data){
+				  waitingDialog({});
+				  //alert();
+			  },
+			  success:  function(data){				    								
+					if(data.resultCode!="0000") {
+						alert("다음과 같은 사유로 입력하신 계좌에 오류가 발견되었습니다.\n계좌조회결과 :["+data.resultMsg+"("+data.resultCode+")]");
+					} else {
+						self.processStatus(true);
+						self.submit();
+					}
+
+					/*테스트용코드**************************************************************************************/
+					/* self.processStatus(true);
+					self.submit(); */
+					
+					/*테스트용코드**************************************************************************************/
+			   },
+			   complete: function(data){
+				   closeWaitingDialog();
+			   },
+			  dataType: "json", 
+			  async:false 
+			});
+		////console.log($.blockUI);
+	
+	// TODO 2014/01/22
+	} else if(self.formValueMD.payWayCode()=='MOB') {
+		//휴대폰 후원  /nanum/banner/hpAuthStep1 , appAmount hpCd hpNo hpJuminNo orgaNm
+		appAmountVal = self.formValueMD.confirmAmount().replace(/,/gi,'');
+		hpCdVal = self.formValueMD.payCd();
+		hpNoVal = self.formValueMD.hpNum();
+		hpJuminNoVal = self.formValueMD.juminNum();
+		//alert(hpJuminNoVal);
+		orgaNmVal = self.formValueMD.orgaNm;
+		processOkay=false;		
+		$.ajax({ 
+			  type: 'POST', 
+			  url: "/Nanum/nanum/banner/hpauth/JI9W1PPGVT/auth.nanum", 
+			  data: { vanCode:"DM", amount: appAmountVal, hpCd:hpCdVal, rphone:hpNoVal, hpJuminNoVal:hpJuminNoVal, orgaNm:orgaNmVal},
+			  beforeSend: function(data){
+				  waitingDialog({});
+			  },
+			  success:  function(data){
+					if(data.resultFlag=="N") {
+						alert("인증 메시지 발송에 실패하였습니다. 잠시 후 다시 시도하여 주시기 바랍니다");
+					} else {
+						var smsVal=data.etcValue;
+						pass.viewMD.formMD.formValueMD.token(smsVal);
+						$("#token").trigger("change");
+						$("#smsVal").val("");
+						$("#smsVal").trigger("change");
+						accResult="false";
+						// Dialog창
+						openHpAuth();
+					}
+			  },
+			  complete: function(data){
+				  closeWaitingDialog();
+			  },
+			  dataType: "json", 
+			  async:false 
+			});
+	
+	//TODO 2014/01/22 - 승인처리
+	} else if(self.formValueMD.payWayCode()=='CAR') {			
+		var isValid = self.formValueMD.validate(false);
+		if(isValid==false) return false;
+		
+		//모바일 브라우져가 아니고 공인인증 사용업체
+		//카드는 공인인증서 대상에서 제외. 20151231
+		
+		
+		self.cardConfirm();
+	// 가상계좌
+	} else if(self.formValueMD.payWayCode()=='VAC') {         
+		//alert(2);
+		//var jsonStr = root.toJsonOnlyObservable(self.formValueMD);
+		////console.log(jsonStr);
+		var isValid = self.formValueMD.validate(false);
+		if(isValid==false) return false;
+		//alert(3);
+		self.vacConfirm();
+	}
+	
+	submitProgress = "N";
+	////console.log("Function End: "+submitProgress);
+};
+//휴대폰 인증 후 결제
+ self.regist = function() {
+	
+	//var jsonStr = root.toJsonOnlyObservable(self.formValueMD);
+	////console.log(jsonStr);
+	var isValid = self.formValueMD.hpAuthMD.validate(false);
+	if(isValid==false) return false;		
+	var jsonStr = root.toJsonOnlyObservable(self.formValueMD.hpAuthMD);
+	
+	////console.log(jsonStr);
+	$.ajax({ 
+		  type: 'POST', 
+		  url: "/Nanum/nanum/banner/hpauth/JI9W1PPGVT/verifyAndConfirm", 
+		  data: jsonStr,
+		  contentType: "application/json",
+		  beforeSend: function(data){
+			  waitingDialog({});
+		  },
+		  success:  function(data){
+				// TODO 선택목록에서 처리된rownum(unique value) 삭제 - self.selectedListData(_.without(pass.viewMD.listMD.selectedListData(),'1'))						    
+				////console.log(data.transactionStatus);
+				if(data.transactionStatus==false) {
+					alert("결제신청진행 불가\n=========\n"+data.errorMsg.join(",").replace(/,/g,"\n"));				    	
+					aJaxResult =  false;
+					if(data.errorMsg.join(",").replace(/,/g,"\n").indexOf("인증번호")<0) {
+						closeHpAuth();
+					}
+				} else {
+					self.formValueMD.resultYn(data.body.resultYn);
+					self.formValueMD.resultCode(data.body.resultCode);
+					self.formValueMD.transactionKey(data.body.transactionKey);
+					self.formValueMD.transactionuniqNum(data.body.transactionuniqNum);
+					self.formValueMD.inMemNo(data.body.inMemNo);
+					aJaxResult = true;
+					closeHpAuth();
+					smsCheckFlag ="true";
+					self.processStatus(true);
+					self.submit();
+				}
+		  },
+		  complete: function(data){
+			  closeWaitingDialog();
+		  },
+		  dataType: "json", 
+		  async:false
+	});		
+};
+
+
+self.cardConfirm = function() {
+	var jsonStr = root.toJsonOnlyObservable(self.formValueMD.cardConfirmMD);
+
+	var chargeCnt="0";
+	switch(self.formValueMD.cardConfirmMD.confirmAmount()){
+	/* 		
+	case "11000":
+		chargeCnt = "10000";
+		break;
+	case "33000":
+		chargeCnt = "30000";
+		break;
+	case "55000":
+		chargeCnt = "50000";
+		break;
+	case "110000":
+		chargeCnt = "100000";
+		break;
+	case "220000":
+		chargeCnt = "200000";
+		break;
+	case "330000":
+		chargeCnt = "300000";
+		break; */	
+	case "11000":
+		chargeCnt = "1000";
+		break;
+	case "33000":
+		chargeCnt = "3000";
+		break;
+	case "55000":
+		chargeCnt = "5000";
+		break;
+	case "110000":
+		chargeCnt = "10000";
+		break;
+	case "220000":
+		chargeCnt = "20000";
+		break;
+	case "330000":
+		chargeCnt = "30000";
+		break;
+	}
+	//console.log(jsonStr);
+	$.ajax({ 
+		  type: 'POST', 
+		  url: "/Nanum/nanum/banner/hpauth/JI9W1PPGVT/cardConfirm", 
+		  data: jsonStr,
+		  contentType: "application/json",
+		  beforeSend: function(data){
+			  waitingDialog({});
+		  },
+		  success:  function(data){
+				// TODO 선택목록에서 처리된rownum(unique value) 삭제 - self.selectedListData(_.without(pass.viewMD.listMD.selectedListData(),'1'))						    
+				////console.log(data.transactionStatus);
+				if(data.transactionStatus==false) {
+					alert("결제신청진행 불가\n=========\n"+data.errorMsg.join(",").replace(/,/g,"\n"));				    	
+					aJaxResult =  false;
+				} else {
+					if("JI9W1PPGVT"=="6XT5KQ8WY0"&&("null"!="null" && "null"!="")){
+						var smsData = {
+								  orgaUniqNum:"null",
+								  orgaId:"null",
+								  chargeCnt:chargeCnt
+						}
+						var sSmsData = JSON.stringify(smsData);
+						// TODO POST
+						$.ajax({ 
+							  type: 'POST', 
+							  url: "/Nanum/nanum/user/orga/setSmsCharge", 
+							  data: sSmsData,
+							  contentType: "application/json",
+							  success:  function(sdata){
+									if(sdata.transactionStatus==false) {
+										alert("즉시 충전에 실패했습니다. \n유선번호를 통해 충전을 완료해주세요.");				    	
+									} else {
+										alert("성공적으로 문자충전이 등록되었습니다");
+									}						  	
+									/* btnSearchOrga(); */
+							  },
+							  dataType: "json", 
+							  async:false
+						});	
+					}
+					self.formValueMD.resultYn(data.body.resultYn);
+					self.formValueMD.resultCode(data.body.resultCode);
+					self.formValueMD.transactionKey(data.body.transactionKey);
+					self.formValueMD.transactionuniqNum(data.body.transactionuniqNum);
+					self.formValueMD.inMemNo(data.body.inMemNo);
+					self.formValueMD.validCancelDate(data.body.validCancelDate);
+					aJaxResult = true;
+					self.processStatus(true);
+					self.submit();
+				}
+		  },
+		  complete: function(data){
+			  closeWaitingDialog();
+		  },
+		  /* error: function(data){
+			  //console.log("error:"+data)
+		  }, */
+		  dataType: "json", 
+		  async:false
+	});
+};
+
+self.vacConfirm = function() {
+	var jsonStr = root.toJsonOnlyObservable(self.formValueMD.vacConfirmMD);
+	$.ajax({ 
+		  type: 'POST', 
+		  url: "/Nanum/nanum/banner/hpauth/JI9W1PPGVT/vacConfirm", 
+		  data: jsonStr,
+		  contentType: "application/json",
+		  beforeSend: function(data){
+			  waitingDialog({});
+		  },
+		  success:  function(data){
+			  //console.log(data);
+				// TODO 선택목록에서 처리된rownum(unique value) 삭제 - self.selectedListData(_.without(pass.viewMD.listMD.selectedListData(),'1'))                         
+				////console.log(data.transactionStatus);
+				if(data.transactionStatus==false) {
+					alert("결제신청진행 불가\n=========\n"+data.errorMsg.join(",").replace(/,/g,"\n"));                     
+					aJaxResult = false;                            
+				} else {                            
+					/* self.formValueMD.resultYn(data.body.resultYn);
+					self.formValueMD.resultCode(data.body.resultCode);
+					self.formValueMD.transactionKey(data.body.transactionKey);
+					self.formValueMD.transactionuniqNum(data.body.transactionuniqNum);
+					self.formValueMD.inMemNo(data.body.inMemNo);
+					self.formValueMD.validCancelDate(data.body.validCancelDate);
+					aJaxResult = true;
+					self.processStatus(true); */
+					alert(data.body.resultMsg);
+					//alert("성공적으로 결제등록 되었습니다.");
+					
+					//alert(1);
+					if(root.mobilecheck()==true) {
+						//window.close();
+						window.open("about:blank","_self").close();
+					} else {
+						//window.close();
+						window.open("about:blank","_self").close();
+						location.reload();
+					}
+					/* 가상계좌는 회원가입처리 안함 */
+					/* self.submit(); */
+				}                           
+		  },
+		  complete: function(data){
+			  closeWaitingDialog();
+		  },
+		  dataType: "json", 
+		  async:false
+	});
+};
+
+self.submit = function() {
+	var jsonStr = root.toJsonOnlyObservable(self.formValueMD,"tmpConfirmAmount","tmpConfirmAmount2","tmpConfirmAmountCheck","topImg", "topImgFlag","selfCertFlag","vacBankCd");
+	//var jsonStr = root.toJsonOnlyObservable(self.formValueMD,"tmpConfirmAmount","tmpConfirmAmount2","tmpConfirmAmountCheck","topImg", "topImgFlag","selfCertFlag");
+	//console.log(jsonStr);
+	var isValid = self.formValueMD.validate(false);
+	if(isValid==false) return false;
+	// TODO POST
+	$.ajax({ 
+		  type: 'POST', 
+		  url: "/Nanum/nanum/banner/JI9W1PPGVT/insert", 
+		  data: jsonStr,
+		  contentType: "application/json",
+		  beforeSend: function(data){
+			  
+			  $("#btnRegist").attr("disabled", true);
+			  $("#btnRegist2").attr("disabled", true);
+			  waitingDialog({});
+		  },
+		  success:  function(data){
+				if(data.transactionStatus==false) {
+					alert(data.errorMsg.join(",").replace(/,/g,"\n"));				    	
+				} else {
+					// CMS인 경우 콜백문자에 대한 언급 필요
+					/* if(root.mobilecheck()==false 
+							&& self.formValueMD.esignUseFlag()=="Y" 
+							&& self.formValueMD.memPayType()=="R" 
+							&& (self.formValueMD.payWayCode()=='CMS' || self.formValueMD.payWayCode()=='CAR' )		
+					) {
+						alert("전자동의 확인완료 및 자동이체 신청이 되었습니다.");
+					} else {
+						alert("성공적으로 결제등록 되었습니다.");
+					} */
+					
+					alert("성공적으로 결제등록 되었습니다.");
+					
+					//alert(1);
+					if(root.mobilecheck()==true) {
+						//window.close();
+						window.open("about:blank","_self").close();
+					} else {
+						//window.close();
+						window.open("about:blank","_self").close();
+						location.reload();
+					}
+					//alert(2);
+				}						  	
+		  },
+		  complete: function(data){
+			  closeWaitingDialog();
+		  },
+		  dataType: "json", 
+		  async:false
+	});	
+};
+
+self.reset = function(){
+};	
+
+self.closeAuth = function(){
+	closeHpAuth();
+};
+$("#memTel2").on('keyup', function(){
+	if($("#memTel2").val().length==4){
+		$("#memTel3").focus();
+	}
+})
+
+
+/* self.blockUI = {
+	update: function (element, valueAccessor, allBindingsAccessor) {
+		var value = ko.utils.unwrapObservable(valueAccessor());
+		if (value)
+			$(element).block();
+		else 
+			$(element).unblock();
+	}
+}; */ 
+};
+
+//email 자동설정
+function OnSelectMailDomain(obj) {
+if($(obj).val()=="") {
+	$("#emailDomain").val("");		
+	$("#emailDomain").attr("readonly",true);
+} else if($(obj).val()=="none") {
+	$("#emailDomain").removeAttr("readonly");
+} else {
+	$("#emailDomain").attr("readonly",true);
+	$("#emailDomain").val($(obj).val());
+}
+}
+
+//일반함수영역
+// 주소세팅 
+function setAddr(data) {
+var ri = $(data).attr("ri");
+if(ri=="null") ri="";
+	/* $("#memZipCode1").val($(data).attr("zipcode1"));
+	$("#memZipCode2").val($(data).attr("zipcode2")); */
+	$("#memZipCode3").val($(data).attr("zipcode3"));
+	$("#memAddr1").val($(data).attr("sido")+" "+$(data).attr("gugun")+" "+$(data).attr("dong")+" "+ri);
+	$("#dialog-form").dialog( "close" );		
+}
+
+
+function setAddress(zipCodeFirst, zipCodeLast, address, extraAddress) {
+$("#memZipCode3").val(zipCodeFirst);
+//$("#memZipCode2").val(zipCodeLast);
+$("#memAddr1").val(address);
+$("#memAddr2").val(extraAddress);
+}
+
+
+
+function openHpAuth(){
+$("#pay_amount").trigger("change");
+$("#pay_code").trigger("change");
+$("#pay_jumin_num").trigger("change");
+$("#hpNo1").trigger("change");
+$("#hpNo2").trigger("change");
+$("#hpNo3").trigger("change");
+
+$("#hpAuth").dialog("open");		
+showCountdown(180);
+}
+
+function closeHpAuth(){
+$("#hpAuth").dialog("close");
+clearTimeout(timeoutId);
+}
+
+function showCountdown(timeToExpiration) {
+remain = timeToExpiration - 1; 
+if (remain >= -1 ){
+	day = Math.floor(timeToExpiration / (3600 * 24)); 
+	mod = timeToExpiration % (24 * 3600); 
+	hour = Math.floor(mod / 3600); 
+	mod = mod % 3600; 
+	min = Math.floor(mod / 60); 
+	sec = mod % 60; 
+	count = " " + min + " 분 " + sec + " 초 "; 
+	$("#countdown").val(count); 
+	if ( remain == -1 ){
+		alert("[22]승인유효시간이 초과되었습니다!");
+		closeHpAuth();				
+	} else {	
+		timeoutId = setTimeout("showCountdown(remain)", 1000); 
+
+	}
+}      
+}
+
+function getTopImg(){
+$.ajax({ 
+	type: 'POST', 
+	url: "/Nanum/nanum/user/mem/getSignFile", 
+	data: {authKey:row.authKey,fileName:"BODY"},
+	success:  function(data){ 
+		var img = new Image();
+		img.src = data.body;
+		var width = img.width;
+		var height = img.height;
+		$("<div style='width:"+width+";height:"+height+";'></div>").append(img).dialog({
+			width: width+40,
+			height: height+30,
+			modal: true
+		}); 
+	
+	},
+	dataType: "json", 
+	async:true
+});
+}
+
+function happynanum_payopen() {         
+var nanum_popUp = window.open("https://www.ihappynanum.com/Nanum/P/paylist","NANUM_PAY","left=50,top=50,width=835px,height=800px,resizable=yes,scrollbars=yes");
+if(nanum_popUp == null) {
+	alert("팝업이 차단되었습니다. 팝업차단을 해제하여 주세요");
+} else {
+	nanum_popUp.focus(); 
+	// 팝업으로 열기
+	//window.open(pop_url, pop_nm, pop_opt);
+   // location.href='/';
+   /*  window.opener="nothing";
+	window.open('','_parent','');
+	window.close(); */             
+}
+}
+
+function waitingDialog(waiting) { // I choose to allow my loading screen dialog to be customizable, you don't have to
+//$("#loadingScreen").html(waiting.message && '' != waiting.message ? waiting.message : '처리중입니다...');
+//$("#loadingScreen").dialog('option', 'title', waiting.title && '' != waiting.title ? waiting.title : 'Loading');
+$("#loadingScreen").dialog('open');
+}
+function closeWaitingDialog() {
+$("#loadingScreen").dialog('close');
+}
+function agreePopup2(type) {
+var url = "/Nanum/cresource/banner/agree_kafp.html";
+var agree = window.open(url,"agree","scrollbars=yes,toolbar=no,resizable=yes,width=600,height=480");
+agree.focus();
+}
+</script>
+</head>
+
+<body style="overflow: hidden auto;">
+<!-- <input type="button" onclick="waitingDialog({});" value="dd" /> -->
+
+<!--  주소찾기  -->
+
+<!-- TODO 공인인증 주민번호 팝업 -->
+
+<div>
+<div class="pop-wrap" data-bind="with:formMD.formValueMD">
+<!--form id="banner0101Vo" name="mainForm" action="/Nanum/nanum/banner/bridge/JI9W1PPGVT.nanum?memPayType=null&amp;loginOrga=null&amp;orgaId=null&amp;lang=null" method="post">
+<input id="uniqueNo" name="uniqueNo" data-bind="value:transactionuniqNum" type="hidden" value="">
+<input id="payBridgeKey" name="payBridgeKey" data-bind="value:transactionKey" type="hidden" value="">
+<input id="resultYn" name="resultYn" data-bind="value:resultYn" type="hidden" value="">
+<input id="inMemNo" name="inMemNo" data-bind="value:inMemNo" type="hidden" value=""-->
+
+<div data-bind="visible:topImgFlag=='N' || topImg() == '' ">
+<h2>
+	<img src="./images/w_logo.png" alt="어린이가 행복한 우리아이재단">
+<!--우리아이재단<br><span>우리아이재단에서 제공하는 결제서비스입니다.</span-->
+</h2>
+</div>
+<div data-bind="visible:topImgFlag=='Y' &amp;&amp; topImg()!='' " style="margin-bottom: 10px; display: none;">                                                 
+<img data-bind="attr:{src:topImg()}" width="100%" id="topImg" src=""><br>
+</div>
+
+<div style="text-align: right; float: right; ">
+<div id="btnCopyUrl" onclick="copyUrl()" style="float: left; margin-right: 0px; background:#303437; padding: 8px 10px;  font-weight:bold; color:#ffffff; text-decoration:none; cursor: pointer; ">결제URL복사</div>
+<!-- <div id="btnCopyUrl" onclick="happynanum_payopen()" style="float:left; background:#303437; padding: 10px 15px;  font-weight:bold; color:#ffffff; text-decoration:none; cursor: pointer; " >후원내역조회</div> -->
+</div>
+
+<!-- 테이블 시작 -->
+<div class="table-list">
+
+<p>기관(단체)정보</p> 
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style-02">
+<colgroup><col style="width:120px;">
+<col style="width:*;">
+</colgroup><tbody><tr>
+
+<th scope="col" class="brown">기관(단체)명</th>
+
+<td class="green"><span data-bind="text:orgaNm">해피나눔</span></td>
+</tr>
+<tr>
+
+<th scope="col" class="brown">연락처</th>
+
+<td class="green"><span data-bind="text:orgaTel">1544-7079</span></td>
+</tr>
+<tr>
+
+<th scope="col" class="brown">메시지</th>
+
+<td class="green"><span data-bind="text:bannerMsg">모금URL 테스트 배너입니다. (PC, 모바일 환경 가능)</span></td>
+</tr>
+</tbody></table>
+</div>
+
+<!-- 테이블 시작 -->
+<div class="table-list">
+
+
+<p>회원정보</p>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style-02">
+<colgroup><col style="width:120px;">
+<col style="width:*;">
+
+</colgroup><tbody><tr data-bind="visible:defaultFlag=='N'" style="display: none;">
+
+<th scope="col">프로젝트명</th>
+
+<td><span data-bind="text:bannerName"></span></td>
+</tr>
+
+<tr>
+
+	
+	
+
+<th scope="col">회원명</th>
+
+<td><input type="text" class="input" id="memNm" maxlength="10" data-bind="value:memNm"></td>
+	
+
+</tr>
+<tr>
+
+<th scope="col">휴대폰</th>
+
+<td><select id="memTel1" data-bind="value:memTel1">
+	<option value="010">010</option>
+	<option value="011">011</option>
+	<option value="016">016</option>
+	<option value="017">017</option>
+	<option value="018">018</option>
+	<option value="019">019</option>
+</select>
+  -
+  <input type="text" class="input inputNum" size="6" id="memTel2" data-bind="value:memTel2" maxlength="4/">
+  -
+  <input type="text" class="input inputNum" size="6" id="memTel3" data-bind="value:memTel3" maxlength="4/"></td>
+</tr>
+
+<tr data-bind="visible:memGrpFlag=='Y'">
+<th scope="col" data-bind="css:{no:memGrpType=='O'}, text:memGrpTitle" class="no">회원구분</th>
+<td>
+
+		  
+	<select name="memGrp" id="memGrp" data-bind="optionsCaption: '선택...',options:memGrps,optionsValue:'code',optionsText:'value',value:memGrp">
+
+	<option value="">선택...</option></select>
+</td>
+</tr>
+<tr data-bind="visible:receiptFlag=='Y'">
+	<th scope="col" data-bind="css:{no:receiptType=='O'}" class="no">
+
+
+			주민번호 또는 <br>사업자번호
+		
+
+	</th>
+	<td scope="col">
+
+		<input id="memDonationJuminNum" style="width:30%" type="tel" maxlength="13" data-bind="value:memDonationJuminNum" class="inptA inputNum">&nbsp;(기부금영수증발급 용도. 숫자만 입력)
+
+	</td>
+</tr>
+<tr data-bind="visible:emailFlag=='Y'">
+
+<th scope="col" data-bind="css:{no:emailType=='O'}" class="no">이메일</th>
+
+<td><input type="text" class="input" id="emailId" maxlength="50" data-bind="value:emailId">@<input type="text" maxlength="50" class="input" id="emailDomain" data-bind="value:emailDomain" readonly>
+	<select name="emaildomainindex" class="inptA" onchange="javascript:OnSelectMailDomain(this);">
+
+	<option value="">--선택--</option>
+
+	<option value="hanmail.net">hanmail.net</option>
+	<option value="gmail.com">gmail.com</option>
+	<option value="naver.com">naver.com</option>
+	<option value="nate.com">nate.com</option>
+	<option value="hotmail.com">hotmail.com</option>
+	<option value="paran.com">paran.com</option>
+
+	<option value="none">직접 입력</option>
+
+	</select>
+  </td>
+</tr>
+<tr data-bind="visible:addrFlag=='Y'">
+
+<th rowspan="2" scope="col" data-bind="css:{no:addrType=='O'}" class="no">주소</th>
+<td><input type="text" class="input" size="12" id="memZipCode3" data-bind="value:memZipCode3" readonly>
+
+  <!-- -
+  <input type="text" class="input" size="6" id="memZipCode2" data-bind="value:memZipCode2"  readonly/> -->
+  <img src="./images/btn_zip.gif" alt="" width="58" height="22" align="absmiddle" onclick="execDaumPostcode()"></td><!--  onClick="root.addressPopup()" -->   
+</tr>
+<tr data-bind="visible:addrFlag=='Y'">
+
+<td class="s-01"><input type="text" class="input" size="100" id="memAddr1" data-bind="value:memAddr1" readonly>
+
+  <br>
+  <input type="text" class="input-2" size="100" id="memAddr2" data-bind="value:memAddr2" maxlength="50">
+  
+  </td>
+</tr>
+<tr data-bind="visible:recommendFlag=='Y'" style="display: none;">
+
+<th scope="col" data-bind="css:{no:recommendType=='O'}" class="no">추천인/단체</th>
+
+<td><input type="text" class="input" id="recommend" maxlength="10" data-bind="value:recommend"></td>
+
+</tr>
+
+<tr data-bind="visible:payGrpFlag=='Y'" style="display: none;">
+
+<th scope="col" data-bind="css:{no:payGrpType=='O'}" class="no">납부유형</th>
+
+<td>
+	  
+	<select name="payGrp" id="payGrp" data-bind="optionsCaption: '선택...',options:payGrps,optionsValue:'code',optionsText:'value',value:payGrp">       
+
+	<option value="">선택...</option></select>
+</td>
+</tr>
+<tr data-bind="visible:memTypeFlag=='Y'" style="display: none;">
+
+<th scope="col" data-bind="css:{no:memTypeType=='O'}" class="no">회원분류</th>
+
+<td>
+	  
+	<select name="memType" id="memType" data-bind="optionsCaption: '선택...',options:memTypes,optionsValue:'code',optionsText:'value',value:memType">       
+
+	<option value="">선택...</option><option value="01">개인</option><option value="02">기업</option><option value="03">단체</option></select>
+</td>
+</tr>
+
+<tr data-bind="visible:companyStatFlag=='Y'" style="display: none;">
+
+<th scope="col" data-bind="css:{no:companyStatType=='O'}" class="no">부서</th>
+
+<td><input type="text" class="input" id="companyStation" maxlength="10" data-bind="value:companyStation"></td>   
+</tr>
+<tr data-bind="visible:memTitleFlag=='Y'" style="display: none;">
+
+<th scope="col" data-bind="css:{no:memTitleType=='O'}" class="no">직함</th>
+
+<td><input type="text" class="input" id="memTitle" maxlength="10" data-bind="value:memTitle"></td>   
+</tr>
+
+</tbody></table>
+</div>
+
+<!-- 테이블 시작 -->
+<div class="table-list">
+
+<p>결제정보</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style-02">
+<colgroup><col style="width:120px;">
+<col style="width:*;">
+</colgroup><tbody><tr>
+
+<th scope="col">결제방식</th>
+
+<td colspan="3">
+	<span data-bind="visible:payWayAvailable.length > 0">
+	   <span class="check"><input type="radio" name="memPayType" id="memPayType" value="R" data-bind="{checked:memPayType}"></span>
+
+	   <div class="te-2">정기결제</div>
+
+	</span>
+	<span data-bind="visible:payWayAvailableTmp.length > 0">
+	   <span class="check"><input type="radio" name="memPayType" value="T" data-bind="{checked:memPayType}"></span>
+
+	   <div class="te-2">일시결제</div>
+
+	</span>
+</td>
+</tr>
+<tr>
+
+<th scope="col">결제수단</th>
+
+<td colspan="3">
+<div data-bind="visible:memPayType()=='R'">
+<!-- ko foreach: payWayAvailable -->
+	<span>
+		<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payWayCode}" name="ko_unique_1" value="CMS" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>
+		<div class="te-2" data-bind="text:value">자동이체(CMS)</div>    
+	</span>
+
+	<span>
+		<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payWayCode}" name="ko_unique_2" value="CAR" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>
+		<div class="te-2" data-bind="text:value">카드결제</div>    
+	</span>
+
+	<span>
+		<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payWayCode}" name="ko_unique_3" value="MOB" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>
+		<div class="te-2" data-bind="text:value">휴대폰</div>    
+	</span>
+<!-- /ko -->
+</div>
+<div data-bind="visible:memPayType()=='T'" style="display: none;">
+<!-- ko foreach: payWayAvailableTmp -->
+	<span>
+		<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payWayCode}" name="ko_unique_4" value="CAR" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>
+		<div class="te-2" data-bind="text:value">카드결제</div>    
+	</span>
+
+	<span>
+		<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payWayCode}" name="ko_unique_5" value="MOB" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>
+		<div class="te-2" data-bind="text:value">휴대폰</div>    
+	</span>
+<!-- /ko -->
+</div>
+</td>
+</tr>
+<!-- 결제정보 시작 -->
+<!-- pay_code -->
+<tr>
+<th scope="col"><span data-bind="text:hpCd.displayName">은행</span></th>
+<td colspan="3">
+	<div data-bind="visible:params.isCms()==true">
+		<span>
+			<select id="payCodeCms" data-bind="options:cmsPayCodeAvaliable, value: bankCd, optionsValue:'code', optionsText:'value'">                           
+			<option value="089">K뱅크</option><option value="004">국민은행</option><option value="011">농협</option><option value="020">우리은행</option><option value="026">신한은행</option><option value="081">KEB하나은행</option><option value="071">우체국</option><option value="003">기업은행</option><option value="023">SC은행</option><option value="027">씨티은행</option><option value="005">외환은행</option><option value="032">부산은행</option><option value="034">광주은행</option><option value="035">제주은행</option><option value="037">전북은행</option><option value="031">대구은행</option><option value="039">경남은행</option><option value="007">수협</option><option value="045">새마을금고</option><option value="048">신협</option><option value="204">삼성증권</option><option value="002">산업은행</option><option value="209">유안타증권</option></select>
+		</span>
+	</div>        
+	<div data-bind="visible:params.isHp()==true" style="display: none;">
+		<!-- ko foreach: hpPayCodeAvaliable -->
+			<span>
+				<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'payCodeHp'+$index}, checked:$parent.hpCd}" name="ko_unique_6" value="SKT" id="payCodeHpfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span><span>&nbsp;</span><span data-bind="text:value">SKT</span>
+			</span>
+		
+			<span>
+				<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'payCodeHp'+$index}, checked:$parent.hpCd}" name="ko_unique_7" value="KTF" id="payCodeHpfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span><span>&nbsp;</span><span data-bind="text:value">KT</span>
+			</span>
+		
+			<span>
+				<span class="check"><input type="radio" data-bind="{attr:{value:code,id:'payCodeHp'+$index}, checked:$parent.hpCd}" name="ko_unique_8" value="LGT" id="payCodeHpfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span><span>&nbsp;</span><span data-bind="text:value">LG U+</span>
+			</span>
+		<!-- /ko -->
+	</div>
+	<div data-bind="visible:params.isCard()==true" style="display: none;">
+		<span>
+			<select id="payCodeCms" data-bind="options:cardPayCodeAvaliable, value: cardCd, optionsValue:'code', optionsText:'value'"><option value="001">신한카드</option><option value="002">비씨카드</option><option value="003">삼성카드</option><option value="004">KB국민카드</option><option value="005">현대카드</option><option value="011">롯데카드</option><option value="006">하나SK카드</option><option value="007">우리카드</option><option value="008">NH농협카드</option><option value="009">외환카드</option><option value="010">씨티카드</option><option value="099">기타카드</option></select>
+		</span>
+	</div>
+	<div data-bind="visible:params.isVac()==true" style="display: none;">
+		<span>
+			<select id="payCodeCms" data-bind="options:vacPayCodeAvaliable, value: vacBankCd, optionsValue:'code', optionsText:'value'"><option value="34">광주은행</option><option value="39">경남은행</option><option value="04">국민은행</option><option value="03">기업은행</option><option value="11">농협</option><option value="31">대구은행</option><option value="81">하나은행</option><option value="88">신한은행</option><option value="23">SC은행</option><option value="20">우리은행</option><option value="71">우체국</option><option value="05">외환은행</option><option value="37">전북은행</option><option value="32">부산은행</option></select>
+		</span>
+	</div>
+</td>
+</tr>
+<!--  -->
+<tr>
+<th scope="col">
+	<span data-bind="text:hpNm.displayName">예금주명</span>
+</th>
+<td colspan="3">
+	<div data-bind="visible:params.isVac()==true" style="display: none;">
+		<span data-bind="text:depositor"></span>
+	</div>
+	<div data-bind="visible:params.isVac()==false">
+		<input type="text" class="input" size="10" id="hpNm" maxlength="30" data-bind="value:hpNm">
+	</div>
+</td>
+</tr>
+<tr data-bind="visible:params.isVac()==false">
+<th scope="col"><span data-bind="html:hpNum.displayName">계좌번호</span></th>
+<td colspan="3">
+	<div data-bind="visible:params.isHp()==true" style="display: none;">
+		<select id="hpNo1" data-bind="value:hpNo1">
+		  <option>010</option>
+		  <option>011</option>
+		  <option>016</option>
+		  <option>017</option>
+		  <option>018</option>
+		  <option>019</option>
+		</select> - 
+		<input type="text" class="input inputNum" id="hpNo2" maxlength="4" size="6" data-bind="value:hpNo2"> - 
+		<input type="text" class="input inputNum" id="hpNo3" maxlength="4" size="6" data-bind="value:hpNo3">
+	</div>
+	<div data-bind="visible:params.isCms()==true">
+		<span><input type="text" id="acctNo" class="input inputNum" maxlength="15" size="20" data-bind="value:acctNo"></span>
+
+		<span><font color="blue">(평생계좌는 자동이체불가. 숫자만 입력)</font></span>
+
+	</div>
+	<div data-bind="visible:params.isCard()==true" style="display: none;">
+	   <input type="text" class="input inputNum" id="cardNo1" maxlength="4" size="4" data-bind="value:cardNo1">-<input type="text" class="input inputNum" id="cardNo2" maxlength="4" size="4" data-bind="value:cardNo2">-<input type="text" class="input inputNum" id="cardNo3" maxlength="4" size="4" data-bind="value:cardNo3">-<input type="text" class="input inputNum" id="cardNo4" maxlength="5" size="4" data-bind="value:cardNo4"><br>
+	   <span style="margin-top: 7px;">
+		   <select id="monthOfCard" data-bind="options:$root.monthList, optionsValue:'code', optionsText:'value', value:monthOfCard"><option value="01">01월</option><option value="02">02월</option><option value="03">03월</option><option value="04">04월</option><option value="05">05월</option><option value="06">06월</option><option value="07">07월</option><option value="08">08월</option><option value="09">09월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option></select>
+		   <select id="yearOfCard" data-bind="options:$root.yearList, optionsValue:'code', optionsText:'value', value:yearOfCard"><option value="2019">2019년</option><option value="2020">2020년</option><option value="2021">2021년</option><option value="2022">2022년</option><option value="2023">2023년</option><option value="2024">2024년</option><option value="2025">2025년</option><option value="2026">2026년</option><option value="2027">2027년</option><option value="2028">2028년</option><option value="2029">2029년</option></select>  
+
+		   <b>(카드유효기간)</b>
+
+	   </span>
+	</div>
+</td>
+</tr>
+<tr data-bind="visible:params.isVac()==false">
+<th scope="col">
+	<span data-bind="html:juminNum.displayName">생년월일</span>
+</th>
+<td colspan="3">           
+	<div data-bind="visible:params.isCms()==true">
+		<input type="text" class="input inputNum" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="6">
+
+		&nbsp;(주민번호 앞 6자리)
+
+	</div>
+	<div data-bind="visible:params.isCard()==true " style="display: none;">
+		<input type="text" class="input inputNum" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="10">
+		
+	
+	</div>	
+	<div data-bind="visible:params.isHp()==true " style="display: none;">
+		<input type="text" class="input inputNum" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="6"> - <input type="text" class="input" size="1" data-bind="value:juminNum2" id="juminNum2" maxlength="1">******
+
+		&nbsp;(주민번호 앞 6자리 + 뒤 1자리)
+
+		<!--  - <input type="text" class="input" style="width:10px;" id="juminNum2" data-bind="value:juminNum2" maxlength="1"/>******
+		
+		&nbsp;(성별을 포함한 주민번호 앞 7자리 예:7505012) -->
+	</div>
+</td>
+</tr>
+<!-- 
+<tr data-bind="visible:params.isHp()==true">
+<th scope="col">
+	<span>가입자성별</span>
+</th>
+<td colspan="3">
+	<span>        
+		<span class="check"><input type=radio name="juminNum2" id="juminNum2" value="1" data-bind="{checked:juminNum2}"/></span>&nbsp;<span>남성</span>&nbsp;&nbsp;&nbsp;
+		<span class="check"><input type=radio name="juminNum2" id="juminNum2" value="2" data-bind="{checked:juminNum2}"/></span>&nbsp;<span>여성</span>
+	</span>
+</td>
+</tr> -->
+
+<tr data-bind="visible:memPayType()=='R'">
+
+  <th scope="col">정기결제일</th>
+
+  <td colspan="3">
+	  <div>
+		  <!-- <div data-bind="visible:params.isCms()==true"> -->
+		  <div>
+			  <!-- ko foreach: cmsPayDt -->         
+			  <span>
+			  <span class="check"><input type="radio" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payDt, disable:$parent.memPayType()=='T'}" name="ko_unique_9" value="10"></span>
+			  <div class="te-4" data-bind="text:value">10일</div>
+			  </span>
+					   
+			  <span>
+			  <span class="check"><input type="radio" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payDt, disable:$parent.memPayType()=='T'}" name="ko_unique_10" value="15"></span>
+			  <div class="te-4" data-bind="text:value">15일</div>
+			  </span>
+					   
+			  <span>
+			  <span class="check"><input type="radio" id="radiofunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payDt, disable:$parent.memPayType()=='T'}" name="ko_unique_11" value="25"></span>
+			  <div class="te-4" data-bind="text:value">25일</div>
+			  </span>
+			  <!-- /ko -->
+		  </div>
+		  <!-- <div data-bind="visible:params.isCms()==false">
+			  <span>
+				  <span  class="check"><input type=radio id="payDt" value="05" data-bind="{checked:payDt, disable:memPayType()=='T' }"></span>
+				  <div class="te-4">05일</div>
+			  </span>
+		  </div> -->
+
+		  <div class="text-3" data-bind="visible:params.isCms()==true">* 정기결제인 경우 해당일에 자동결제 됩니다.</div>
+		  <div class="text-3" data-bind="visible:params.isCms()==false" style="display: none;">* 후원신청시 실시간 승인(결제)이 이뤄지며, 익월부터 해당일에 매월 자동결제됩니다.</div>
+
+	  </div>
+  </td>
+</tr>
+<tr>
+</tr>
+
+
+<!-- <tr>
+<th scope="col">결제정보</th>
+<td>
+<table width="100%" class="table-style-03" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+	<th scope="col"><span data-bind="text:hpCd.displayName"></span></th>
+	<td>        
+	<div data-bind="visible:params.isCms()==true">
+	<span>
+		<select id="payCodeCms" data-bind="options:cmsPayCodeAvaliable, value: bankCd, optionsValue:'code', optionsText:'value'">							
+		</select>
+	</span>
+	</div>        
+	<div data-bind="visible:params.isHp()==true">
+	 ko foreach: hpPayCodeAvaliable
+	<span>
+		<span  class="check"><input type=radio data-bind="{attr:{value:code,id:'payCodeHp'+$index}, checked:$parent.hpCd}"></span><span>&nbsp;</span><span  data-bind="text:value"></span>
+	</span>
+	/ko
+	</div>
+	<div data-bind="visible:params.isCard()==true">
+	<span>
+	<select id="payCodeCms" data-bind="options:cardPayCodeAvaliable, value: cardCd, optionsValue:'code', optionsText:'value'">							
+	</select>
+	</span>
+	</div>        
+	</td>
+	<th scope="col"><span data-bind="text:hpNm.displayName"></span></th>
+	<td><input type="text" class="input"size="10" id="hpNm" maxlength="10" data-bind="value:hpNm"/></td>
+  </tr>
+  
+  <tr>
+	<th scope="col"><span data-bind="html:hpNum.displayName"></span></th>
+	
+	<td>
+	<div data-bind="visible:params.isHp()==true">
+	<select id="hpNo1" data-bind="value:hpNo1">
+	  <option>010</option>
+	  <option>011</option>
+	  <option>016</option>
+	  <option>017</option>
+	  <option>018</option>
+	  <option>019</option>
+	</select> - 
+	<input type="text" class="input" id="hpNo2" maxlength="4" size="6" data-bind="value:hpNo2"/> - 
+	<input type="text" class="input" id="hpNo3" maxlength="4" size="6" data-bind="value:hpNo3"/>
+	</div>
+	
+	<div data-bind="visible:params.isCms()==true">
+		<input type="text" id="acctNo" class="input" maxlength="15" size="20" id="acctNo" data-bind="value:acctNo"/>
+		<br><span><font color="blue">(평생계좌는 자동이체불가)</font></span>
+	</div>
+	
+	<div data-bind="visible:params.isCard()==true">
+	<input type="text" class="input" id="cardNo1" maxlength="4" size="4" data-bind="value:cardNo1"/>-<input type="text" class="input" id="cardNo2" maxlength="4" size="4" data-bind="value:cardNo2"/>-<input type="text" class="input" id="cardNo3" maxlength="4" size="4" data-bind="value:cardNo3"/>-<input type="text" class="input" id="cardNo4" maxlength="4" size="4" data-bind="value:cardNo4"/>
+	<br/><span style="margin-top: 7px;">
+			<select id="monthOfCard" data-bind="options:$root.monthList, optionsValue:'code', optionsText:'value', value:monthOfCard"></select>
+			<select id="yearOfCard" data-bind="options:$root.yearList, optionsValue:'code', optionsText:'value', value:yearOfCard"></select>  
+		 <b>(카드유효기간)</b></span>
+								  
+	</div>
+	</td>
+	
+	<th scope="col"><span data-bind="html:juminNum.displayName"></span></th>
+	<td>         	
+		<div data-bind="visible:params.isCms()==true">
+			<input type="text" class="input" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="6"/>
+			<br/>(주민번호 앞 6자리 예:750501)
+		</div>
+		<div data-bind="visible:params.isCard()==true ">
+			<input type="text" class="input" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="10"/>
+			<br/>(주민번호 앞 6자리 예:750501)
+		</div>
+		<div data-bind="visible:params.isHp()==true ">
+		*********************************************************************************************************
+		<input type="text" class="input" size="11" data-bind="value:juminNum1" id="juminNum1" maxlength="6"/> - <input type="text" class="input" style="width:10px;" id="juminNum2" data-bind="value:juminNum2" maxlength="1"/>******
+			
+		   <br/><span style="font-size: 0.85em;">(성별을 포함한 주민번호 앞 7자리 예:7505012)</span>
+
+			*********************************************************************************************************
+		</div>
+		
+	</td>
+  </tr>
+  
+  <tr data-bind="visible:memPayType()=='R'">
+	<th scope="col">정기결제일</th>
+	<td colspan="3">
+	<div>
+		 <div data-bind="visible:params.isCms()==true">
+			ko foreach: cmsPayDt         
+			<span>
+			<span  class="check"><input type=radio id="payDt" data-bind="{attr:{value:code,id:'radio'+$index}, checked:$parent.payDt, disable:$parent.memPayType()=='T'}"></span>
+			<div class="te-4" data-bind="text:value"></div>
+			</span>
+			/ko
+		</div>
+		 <div data-bind="visible:params.isCms()==false">
+		  <span>
+			<span  class="check"><input type=radio id="payDt" value="05" data-bind="{checked:payDt, disable:memPayType()=='T' }"></span>
+			<div class="te-4">05일</div>
+			</span>
+	 </div>
+		<div class="text-3" data-bind="visible:params.isCms()==true">* 정기결제인 경우 해당일에 자동결제 됩니다.</div>
+		<div class="text-3" data-bind="visible:params.isCms()==false">* 후원신청시 실시간 승인(결제)이 이뤄지며, 익월부터 해당일에 매월 자동결제됩니다.</div>
+	</div>
+	</td>
+	</tr>
+</table></td>
+</tr> -->
+
+<!-- 결제정보 끝 -->
+
+
+<tr>
+
+ <th scope="col">결제금액</th>
+
+ <td>
+ 
+ 
+ <div class="left" data-bind="visible:moneyType!='C' " style="display: none;">
+	  
+ <input type="text" id="confirmAmount" size="12" class="input inputNum" onblur="root.currencyBlur(this)" onclick="root.currencyFocus(this)" onfocus="root.currencyFocus(this)" data-bind="value:confirmAmount"> 원
+
+ </div>
+ <div data-bind="visible:moneyType=='C' ">
+
+
+
+
+
+	<!-- ko foreach: params.confirmAmountRange -->
+	<span>
+		<span class="check"><input type="radio" name="confirmAmount" data-bind="{attr:{value:code,id:'confirmAmount'+$index}, checked:$parent.tmpConfirmAmount}" value="1000" id="confirmAmountfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>&nbsp;<span data-bind="text:value">1,000원</span>
+	</span>
+	
+	<span>
+		<span class="check"><input type="radio" name="confirmAmount" data-bind="{attr:{value:code,id:'confirmAmount'+$index}, checked:$parent.tmpConfirmAmount}" value="2000" id="confirmAmountfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>&nbsp;<span data-bind="text:value">2,000원</span>
+	</span>
+	
+	<span>
+		<span class="check"><input type="radio" name="confirmAmount" data-bind="{attr:{value:code,id:'confirmAmount'+$index}, checked:$parent.tmpConfirmAmount}" value="3000" id="confirmAmountfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>&nbsp;<span data-bind="text:value">3,000원</span>
+	</span>
+	
+	<span>
+		<span class="check"><input type="radio" name="confirmAmount" data-bind="{attr:{value:code,id:'confirmAmount'+$index}, checked:$parent.tmpConfirmAmount}" value="0" id="confirmAmountfunction d(){if(0<arguments.length){if(!d.equalityComparer||!d.equalityComparer(c,arguments[0]))d.H(),c=arguments[0],d.G();return this}b.r.Va(d);return c}"></span>&nbsp;<span data-bind="text:value">직접입력</span>
+	</span>
+	<!-- /ko -->    
+	<span data-bind="visible:tmpConfirmAmount()!=null &amp;&amp; tmpConfirmAmount()=='0' " style="display: none;">
+	  
+		<input type="text" size="15" id="tmpConfirmAmount2" class="input inputNum" onblur="root.currencyBlur(this)" onclick="root.currencyFocus(this)" onfocus="root.currencyFocus(this)" data-bind="value:tmpConfirmAmount2"> 원
+
+	</span>     
+
+
+ </div>
+ <div>
+
+	<span style="float:left;" class="text-3">* 최소  </span><span data-bind="text:moneyRange.minText" style="float:left" class="text-3">0</span><span style="float:left" class="text-3">원 이상 결제 가능합니다.</span><span style="clear:both"></span>
+
+</div>
+ </td>
+ </tr>
+ 
+ 
+<tr>
+
+	<th scope="col">결제동의</th>
+
+	<td> 
+		<div data-bind="visible:memPayType()=='R'">
+		<span>
+			<span class="check"><input type="checkbox" value="Y" id="agree1" data-bind="{checked:agree1}"></span>
+
+			<div class="te-5">신청내역을 확인 및 매월 자동결제에 동의</div>
+
+		</span>
+		</div>
+		<span>
+			<span class="check"><input type="checkbox" value="Y" id="agree2" data-bind="{checked:agree2}"></span>
+
+			<div class="te-5">개인정보 수집 및 이용, 제공, 위탁등에 동의 <img src="https://www.ihappynanum.com/Nanum/cresource/banner2/image/popup/btn_clause.gif" width="46" height="18" align="absmiddle" class="mT2" onclick="root.agreePopup('JI9W1PPGVT')"></div>
+
+		</span>
+
+		
+		
+	</td>
+</tr>
+</tbody></table>
+</div>
+<div data-bind="visible:topImgFlag=='N'" class="bottom">
+
+	<a href="#" data-bind="click:$root.formMD.registMember" id="btnRegist">신청하기</a>
+
+</div>
+
+<div data-bind="visible:topImgFlag=='Y' &amp;&amp; topImg !='' " style="display: none;">
+   <table align="center" class="btm-tbl">
+   <tbody><tr>
+	   <td class="btm" height="100">
+
+		   <a href="#" data-bind="click:$root.formMD.registMember" id="btnRegist2"><span>신청하기</span></a>
+
+	   </td>
+   </tr>
+   <tr>
+	   <td bgcolor="#cccccc">&nbsp;</td>
+   </tr>
+   <tr>
+
+	  <td height="30" align="left">"해피나눔에서 제공하는 결제서비스입니다."</td>
+
+   </tr>
+   <tr>
+	  <td height="30" align="right"><img src="/Nanum/cresource/banner2/image/popup/logo.gif" style="display:block; margin-right:10px;" border="0">&nbsp;&nbsp;</td>
+   </tr>
+   </tbody></table>                                                 
+</div>
+<iframe name="popupFrame" id="popupFrame" style="width:0px;height:0px;border:0px;"></iframe>
+
+</form></div>
+
+</div>
+
+
+
+
+
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-dialog-form" style="display: none; z-index: 1000; outline: 0px; position: absolute;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-dialog-form">주소찾기</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="dialog-form" style="" class="ui-dialog-content ui-widget-content"> 
+<form id="addrform">
+<fieldset>
+	<label for="name">주소찾기</label>
+			<input type="text" name="AddrDong" id="AddrDong" class="text ui-widget-content ui-corner-all">
+			<input type="button" id="modalAddr" value="주소검색" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+			(예: 삼청동,반포동,철원읍,표선면)
+</fieldset>
+</form>
+<div id="addr-contain" class="ui-widget">
+	<table class="ui-widget ui-widget-content" width="95%">
+		<thead>
+			<tr class="ui-widget-header ">
+				<th width="15%">우편번호</th>
+				<th width="75%">주소</th>
+				<th width="10%">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody id="addrbody">
+			<tr>
+				<td colspan="3">검색된 내역이 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div><div class="ui-resizable-handle ui-resizable-n"></div><div class="ui-resizable-handle ui-resizable-e"></div><div class="ui-resizable-handle ui-resizable-s"></div><div class="ui-resizable-handle ui-resizable-w"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 1001;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1002;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1003;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1004;"></div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">닫기</span></button></div></div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-sign-layer" style="display: none; z-index: 1000; outline: 0px; position: absolute;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-sign-layer">[전자동의(본인인증)]</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="sign-layer" style="" data-bind="with:formMD" class="ui-dialog-content ui-widget-content">
+<br>
+<table width="100%">
+<tbody><tr height="30px">
+<th align="left" class="ui-widget-content">
+ 주민등록번호: <input type="text" readonly data-bind="value:formValueMD.juminNum1" size="7" maxlength="6"> -<input type="text" size="8" maxlength="7" data-bind="value:tmpJuminNum2">
+ <input type="button" md="new" value="확인" data-bind="click:goSign" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+ </th>
+ </tr>
+</tbody></table>
+<br>
+(안내)<br>
+  &nbsp;&nbsp; * 해당 주민번호는 공인인증 및 본인인증 확인시에만 활용됩니다.(인증기관체크용도)
+</div><div class="ui-resizable-handle ui-resizable-n"></div><div class="ui-resizable-handle ui-resizable-e"></div><div class="ui-resizable-handle ui-resizable-s"></div><div class="ui-resizable-handle ui-resizable-w"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 1001;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1002;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1003;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1004;"></div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">닫기</span></button></div></div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-hpAuth" style="display: none; z-index: 1000; outline: 0px; position: absolute;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-hpAuth">해피나눔-휴대폰 결제신청 내역입니다.</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="hpAuth" style="" data-bind="with:formMD.formValueMD" class="ui-dialog-content ui-widget-content">
+<input type="hidden" id="token" data-bind="value:token">
+<table width="100%">
+	<tbody><tr height="30px">
+		<th width="20%" align="center" class="ui-widget-header">이용기관명</th>
+		<th align="left" class="ui-widget-content" id="ha1">해피나눔</th>
+	</tr>
+	<tr height="30px">
+		<th align="center" class="ui-widget-header">결제금액</th>
+		<th align="left" class="ui-widget-content" id="ha2"> <span data-bind="text:confirmAmount"></span>원</th>
+	</tr>
+	<tr height="30px">
+		<th align="center" class="ui-widget-header">휴대폰번호</th>
+		<th align="left" class="ui-widget-content" id="ha3" data-bind="text:hpNumFormat">010--</th>
+	</tr>
+	<tr height="30px">
+		<th align="center" class="ui-widget-header">통신사</th>
+		<th align="left" class="ui-widget-content" id="ha4" data-bind="text:hpCdNm"></th>
+	</tr>
+	<tr height="30px">
+		<td align="center" class="ui-widget-header">인증번호</td>
+		<th align="left" class="ui-widget-content" id="ha5">
+			<input type="text" size="15" maxlength="6" id="smsVal" data-bind="value:smsVal">
+			승인유효시간
+			<input id="countdown" type="text" class="text_box2" maxlength="6" style="width:60px;height:17px;padding:4 0 0 0;" readonly value="" name="InputTime">
+			<br>지금 승인번호가 문자메시지로 전송중입니다. 
+			<br>휴대폰을 확인하시기 바랍니다.	
+		</th>
+	</tr>		
+</tbody></table>
+<table width="100%">
+	<tbody><tr>
+		<td align="center">
+			<input type="button" md="new" id="authOkayBtn2" data-bind="click:$root.formMD.regist" value="확인" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+			<input type="button" id="authCancelBtn" value="취소" md="new" data-bind="click:$root.formMD.closeAuth" class="ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+		</td>
+	</tr>
+</tbody></table>
+
+<table width="100%">
+	<tbody><tr>
+		<td width="55%" align="left">
+			해피나눔 고객센터 : 1544-7079<br>
+			해피나눔 사이트 : www.ihappynanum.com			
+		</td>
+		<td width="45%" align="right">
+			통신사 정책안내		
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+<div class="ui-resizable-handle ui-resizable-n"></div><div class="ui-resizable-handle ui-resizable-e"></div><div class="ui-resizable-handle ui-resizable-s"></div><div class="ui-resizable-handle ui-resizable-w"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 1001;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1002;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1003;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1004;"></div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">닫기</span></button></div></div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all loadingScreenWindow" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-loadingScreen" style="display: none; z-index: 1000; outline: 0px;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-loadingScreen">&nbsp;</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="loadingScreen" class="ui-dialog-content ui-widget-content">
+<h1><img src="/Nanum/cresource/img/loading.gif"> 처리중입니다...</h1>
+</div>
+</div>
+</body>
+</html>
